@@ -20,26 +20,29 @@ namespace PositronAPI.Models.Item
         [DataMember(Name = "name")]
         public string Name { get; set; }
 
+        [DataMember(Name = "category")]
+        public ItemCategories Category { get; set; }
+
         /// <summary>
         /// Gets or Sets Description
         /// </summary>
 
         [DataMember(Name = "description")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// Gets or Sets Price
         /// </summary>
 
         [DataMember(Name = "price")]
-        public decimal? Price { get; set; }
+        public decimal Price { get; set; } = 0.0M;
 
         /// <summary>
         /// Gets or Sets Stock
         /// </summary>
 
         [DataMember(Name = "stock")]
-        public int? Stock { get; set; }
+        public int Stock { get; set; } = 0;
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -50,6 +53,7 @@ namespace PositronAPI.Models.Item
             var sb = new StringBuilder();
             sb.Append("class Item {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Category: ").Append(Category).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  Price: ").Append(Price).Append("\n");
             sb.Append("  Stock: ").Append(Stock).Append("\n");
@@ -94,6 +98,10 @@ namespace PositronAPI.Models.Item
                     Name == other.Name ||
                     Name != null &&
                     Name.Equals(other.Name)
+                ) &&
+                (
+                    Category == other.Category &&
+                    Category.Equals(other.Category)
                 ) &&
                 (
                     Description == other.Description ||

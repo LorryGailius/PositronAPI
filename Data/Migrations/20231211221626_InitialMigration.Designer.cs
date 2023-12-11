@@ -12,7 +12,7 @@ using PositronAPI.Context;
 namespace PositronAPI.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231211213801_InitialMigration")]
+    [Migration("20231211221626_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -78,18 +78,20 @@ namespace PositronAPI.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
+                    b.Property<int>("Category")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal?>("Price")
+                    b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
-                    b.Property<int?>("Stock")
+                    b.Property<int>("Stock")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -105,12 +107,11 @@ namespace PositronAPI.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<decimal?>("Balance")
+                    b.Property<decimal>("Balance")
                         .HasColumnType("numeric");
 
-                    b.Property<string>("CustomerId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<long>("CustomerId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 

@@ -17,14 +17,14 @@ namespace PositronAPI.Models.LoyaltyCard
         /// </summary>
 
         [DataMember(Name = "customerId")]
-        public string CustomerId { get; set; }
+        public long CustomerId { get; set; }
 
         /// <summary>
         /// Gets or Sets Balance
         /// </summary>
 
         [DataMember(Name = "balance")]
-        public decimal? Balance { get; set; }
+        public decimal Balance { get; set; } = 0.0M;
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -73,6 +73,12 @@ namespace PositronAPI.Models.LoyaltyCard
             if (ReferenceEquals(this, other)) return true;
 
             return
+
+                (
+                    Id == other.Id ||
+                    Id != null &&
+                    Id.Equals(other.Id)
+                ) &&
                 (
                     CustomerId == other.CustomerId ||
                     CustomerId != null &&

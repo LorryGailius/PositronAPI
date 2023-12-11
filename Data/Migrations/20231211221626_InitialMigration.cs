@@ -47,9 +47,10 @@ namespace PositronAPI.Data.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
-                    Price = table.Column<decimal>(type: "numeric", nullable: true),
-                    Stock = table.Column<int>(type: "integer", nullable: true)
+                    Category = table.Column<int>(type: "integer", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    Price = table.Column<decimal>(type: "numeric", nullable: false),
+                    Stock = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,8 +63,8 @@ namespace PositronAPI.Data.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    CustomerId = table.Column<string>(type: "text", nullable: false),
-                    Balance = table.Column<decimal>(type: "numeric", nullable: true)
+                    CustomerId = table.Column<long>(type: "bigint", nullable: false),
+                    Balance = table.Column<decimal>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {
