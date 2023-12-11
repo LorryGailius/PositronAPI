@@ -12,10 +12,12 @@ namespace PositronAPI.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly CustomerService _customerService;
+        private readonly LoyaltyService _loyaltyService;
 
-        public CustomersController(CustomerService customerService)
+        public CustomersController(CustomerService customerService, LoyaltyService loyaltyService)
         {
             _customerService = customerService;
+            _loyaltyService = loyaltyService;
         }
 
         // Customer Endpoints
@@ -31,8 +33,8 @@ namespace PositronAPI.Controllers
         {
             var response = await _customerService.CreateCustomer(body);
 
-            if(response == null) { return BadRequest(); }
-            else { return Ok(response);}
+            if (response == null) { return BadRequest(); }
+            else { return Ok(response); }
         }
 
         /// <summary>
@@ -60,7 +62,7 @@ namespace PositronAPI.Controllers
         [Route("/customer/{customerId}")]
         public async Task<ActionResult> EditCustomer([FromBody] Customer body, [FromRoute][Required] long customerId)
         {
-            if(body.Id != 0 && body.Id != customerId) { return BadRequest(); }
+            if (body.Id != 0 && body.Id != customerId) { return BadRequest(); }
 
             var response = await _customerService.EditCustomer(body, customerId);
 
@@ -78,7 +80,7 @@ namespace PositronAPI.Controllers
         public async Task<ActionResult<Customer>> GetCustomer([FromRoute][Required] long customerId)
         {
             var response = await _customerService.GetCustomer(customerId);
-            if(response == null) { return NotFound();}
+            if (response == null) { return NotFound(); }
             return Ok(response);
         }
 
@@ -93,7 +95,7 @@ namespace PositronAPI.Controllers
         public async Task<ActionResult<List<Customer>>> GetCustomers([FromQuery] decimal? top, [FromQuery] decimal? skip)
         {
             var response = await _customerService.GetCustomers();
-            if(!response.Any()) { return NoContent();}
+            if (!response.Any()) { return NoContent(); }
 
             return Ok(response);
         }
@@ -108,9 +110,12 @@ namespace PositronAPI.Controllers
         /// <param name="customerId">The id of the loyalty card holder</param>
         [HttpPost]
         [Route("/customer/{customerId}/loyaltyCard")]
-        public virtual IActionResult CreateLoyaltyCard([FromBody] LoyaltyCard body, [FromRoute][Required] long customerId)
+        public async Task<ActionResult> CreateLoyaltyCard([FromBody][Required] LoyaltyCard body)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            var response = await _loyaltyService.CreateLoyaltyCard(body);
+
+            if (response == null) { return BadRequest(); }
+            return Ok(response);
         }
 
         /// <summary>
@@ -120,9 +125,12 @@ namespace PositronAPI.Controllers
         /// <param name="customerId">The id of the loyalty card holder</param>
         [HttpDelete]
         [Route("/customer/{customerId}/loyaltyCard")]
-        public virtual IActionResult DeleteLoyaltyCard([FromRoute][Required] long customerId)
+        public async Task<ActionResult> DeleteLoyaltyCard([FromRoute][Required] long customerId)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            var response = await _loyaltyService.DeleteLoyaltyCard(customerId);
+
+            if (response == null) { return NotFound(); }
+            return NoContent();
         }
 
         /// <summary>
@@ -132,9 +140,9 @@ namespace PositronAPI.Controllers
         /// <param name="customerId">The id of the loyalty card holder</param>
         [HttpGet]
         [Route("/customer/{customerId}/loyaltyCard")]
-        public virtual IActionResult GetLoyaltyCard([FromRoute][Required] long customerId)
+        public async Task<ActionResult<LoyaltyCard>> GetLoyaltyCard([FromRoute][Required] long customerId)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            return await _loyaltyService.GetLoyaltyCard(customerId);
         }
 
         // Coupon Endpoints
