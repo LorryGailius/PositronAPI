@@ -18,14 +18,14 @@ namespace PositronAPI.Models.Coupons
         /// </summary>
 
         [DataMember(Name = "customerId")]
-        public string CustomerId { get; set; }
+        public long CustomerId { get; set; }
 
         /// <summary>
         /// Gets or Sets ExpirationDate
         /// </summary>
 
         [DataMember(Name = "expirationDate")]
-        public string ExpirationDate { get; set; }
+        public DateTime ExpirationDate { get; set; }
 
         /// <summary>
         /// Gets or Sets Ammount
