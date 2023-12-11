@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PositronAPI.Models;
+using PositronAPI.Models.Coupons;
+using PositronAPI.Models.Customer;
+using PositronAPI.Models.Item;
+using PositronAPI.Models.LoyaltyCard;
 
 namespace PositronAPI.Context
 {
@@ -7,13 +10,13 @@ namespace PositronAPI.Context
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        DbSet<Customer> customers { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
-        DbSet<Coupon> coupons { get; set; }
+        public DbSet<Coupon> Coupons { get; set; }
 
-        DbSet<Item> items { get; set; }
+        public DbSet<Item> Items { get; set; }
 
-        DbSet<LoyaltyCard> loyaltyCards { get; set; }
+        public DbSet<LoyaltyCard> LoyaltyCards { get; set; }
 
     }
 }
