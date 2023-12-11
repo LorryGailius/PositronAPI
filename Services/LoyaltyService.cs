@@ -12,10 +12,7 @@ namespace PositronAPI.Services
             _context = context;
         }
 
-        // public async Task<ActionResult> CreateLoyaltyCard([FromBody] LoyaltyCard body, [FromRoute][Required] long customerId)
-        // DeleteLoyaltyCard([FromRoute][Required] long customerId)
-        // GetLoyaltyCard([FromRoute][Required] long customerId)
-
+        // Add a loyalty card
         public async Task<LoyaltyCard> CreateLoyaltyCard(LoyaltyCard loyaltyCard)
         {
             var customer = await _context.Customers.FindAsync(loyaltyCard.CustomerId);
@@ -29,6 +26,7 @@ namespace PositronAPI.Services
             return loyaltyCard;
         }
 
+        // Remove a loyalty card
         public async Task<LoyaltyCard> DeleteLoyaltyCard(long customerId)
         {
             var loyaltyCard = await _context.LoyaltyCards.FindAsync(customerId);
@@ -42,6 +40,7 @@ namespace PositronAPI.Services
             return loyaltyCard;
         }
 
+        // Get a loyalty card
         public async Task<LoyaltyCard> GetLoyaltyCard(long customerId)
         {
             return await _context.LoyaltyCards.FindAsync(customerId);

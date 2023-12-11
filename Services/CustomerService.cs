@@ -17,9 +17,15 @@ namespace PositronAPI.Services
         // Add a customer
         public async Task<Customer> CreateCustomer(Customer customer)
         {
-            _context.Customers.Add(customer);
+            Customer newCustomer = new Customer
+            {
+                Name = customer.Name,
+                Email = customer.Email
+            };
+
+            _context.Customers.Add(newCustomer);
             await _context.SaveChangesAsync();
-            return customer;
+            return newCustomer;
         }
 
         // Remove a customer
@@ -60,9 +66,9 @@ namespace PositronAPI.Services
         }
 
         // Get all customers
-        public async Task<List<Customer>> GetCustomers()
+        public async Task<List<Customer>> GetCustomers(int top = 10, int skip = 0)
         {
-            return await _context.Customers.ToListAsync();
+            return await _context.Customers.Skip(skip).Take(top).ToListAsync();
         }
 
     }
