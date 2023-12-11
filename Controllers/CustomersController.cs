@@ -16,7 +16,7 @@ namespace PositronAPI.Controllers
         /// <param name="body">Properties for creating a new customer.</param>
         [HttpPost]
         [Route("/customer")]
-        public virtual IActionResult CreateCustomer([FromBody] CreateCustomer body)
+        public IActionResult CreateCustomer([FromBody] CreateCustomer body)
         {
             return StatusCode(StatusCodes.Status501NotImplemented);
         }

@@ -7,6 +7,13 @@ namespace PositronAPI.Models
     public class LoyaltyCard : IEquatable<LoyaltyCard>
     {
         /// <summary>
+        /// ID of the loyalty card
+        /// </summary>
+        [DataMember(Name = "id")]
+        public int Id { get; set; }
+
+
+        /// <summary>
         /// Gets or Sets CustomerId
         /// </summary>
 
@@ -28,6 +35,7 @@ namespace PositronAPI.Models
         {
             var sb = new StringBuilder();
             sb.Append("class LoyaltyCard {\n");
+            sb.Append("  Id: ").Append(Id).Append("\n");    
             sb.Append("  CustomerId: ").Append(CustomerId).Append("\n");
             sb.Append("  Balance: ").Append(Balance).Append("\n");
             sb.Append("}\n");
