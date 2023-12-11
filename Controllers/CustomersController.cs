@@ -29,7 +29,7 @@ namespace PositronAPI.Controllers
         [Route("/customer/{customerId}")]
         public virtual IActionResult DeleteCustomer([FromRoute][Required] string customerId)
         {
-               return StatusCode(StatusCodes.Status501NotImplemented);
+            return StatusCode(StatusCodes.Status501NotImplemented);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace PositronAPI.Controllers
         [Route("/customer/{customerId}")]
         public virtual IActionResult EditCustomer([FromBody] CreateCustomer body, [FromRoute][Required] string customerId)
         {
-                  return StatusCode(StatusCodes.Status501NotImplemented);
+            return StatusCode(StatusCodes.Status501NotImplemented);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace PositronAPI.Controllers
         [Route("/customer/{customerId}")]
         public virtual IActionResult GetCustomer([FromRoute][Required] string customerId)
         {
-               return StatusCode(StatusCodes.Status501NotImplemented);
+            return StatusCode(StatusCodes.Status501NotImplemented);
         }
 
         /// <summary>
@@ -67,10 +67,48 @@ namespace PositronAPI.Controllers
         [Route("/customer")]
         public virtual IActionResult GetCustomers([FromQuery] decimal? top, [FromQuery] decimal? skip)
         {
-               return StatusCode(StatusCodes.Status501NotImplemented);
+            return StatusCode(StatusCodes.Status501NotImplemented);
         }
 
         /// TODO: Add methods for Coupons and LoyaltyCards 
+
+        /// <summary>
+        /// Add a loyalty card for customer
+        /// </summary>
+        /// <remarks>Creates a loyalty card.</remarks>
+        /// <param name="body">Properties for creating a new loyalty card.</param>
+        /// <param name="customerId">The id of the loyalty card holder</param>
+        [HttpPost]
+        [Route("/customer/{customerId}/loyaltyCard")]
+        public virtual IActionResult CreateLoyaltyCard([FromBody] CreateLoyaltyCard body, [FromRoute][Required] string customerId)
+        {
+            return StatusCode(StatusCodes.Status501NotImplemented);
+        }
+
+        /// <summary>
+        /// Remove a loyalty card
+        /// </summary>
+        /// <remarks>Deletes a loyalty card.</remarks>
+        /// <param name="customerId">The id of the loyalty card holder</param>
+        [HttpDelete]
+        [Route("/customer/{customerId}/loyaltyCard")]
+        public virtual IActionResult DeleteLoyaltyCard([FromRoute][Required] string customerId)
+        {
+            return StatusCode(StatusCodes.Status501NotImplemented);
+        }
+
+        /// <summary>
+        /// Gets loyalty card of a customer
+        /// </summary>
+        /// <remarks>Gets loyalty card.</remarks>
+        /// <param name="customerId">The id of the loyalty card holder</param>
+        [HttpGet]
+        [Route("/customer/{customerId}/loyaltyCard")]
+        public virtual IActionResult GetLoyaltyCard([FromRoute][Required] string customerId)
+        {
+            return StatusCode(StatusCodes.Status501NotImplemented);
+        }
+
 
     }
 }
