@@ -2,10 +2,17 @@
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace PositronAPI.Models
+namespace PositronAPI.Models.Item
 {
-    public class CreateItem : IEquatable<CreateItem>
+    public class Item : IEquatable<Item>
     {
+        /// <summary>
+        /// Gets or Sets Id
+        /// </summary>
+
+        [DataMember(Name = "id")]
+        public long Id { get; set; }
+
         /// <summary>
         /// Gets or Sets Name
         /// </summary>
@@ -41,11 +48,12 @@ namespace PositronAPI.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class CreateItem {\n");
+            sb.Append("class Item {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  Price: ").Append(Price).Append("\n");
             sb.Append("  Stock: ").Append(Stock).Append("\n");
+            sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -68,15 +76,15 @@ namespace PositronAPI.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((CreateItem)obj);
+            return obj.GetType() == GetType() && Equals((Item)obj);
         }
 
         /// <summary>
-        /// Returns true if CreateItem instances are equal
+        /// Returns true if Item instances are equal
         /// </summary>
-        /// <param name="other">Instance of CreateItem to be compared</param>
+        /// <param name="other">Instance of Item to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(CreateItem other)
+        public bool Equals(Item other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -101,6 +109,11 @@ namespace PositronAPI.Models
                     Stock == other.Stock ||
                     Stock != null &&
                     Stock.Equals(other.Stock)
+                ) &&
+                (
+                    Id == other.Id ||
+                    Id != null &&
+                    Id.Equals(other.Id)
                 );
         }
     }

@@ -1,31 +1,33 @@
 ﻿using Newtonsoft.Json;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Xml;
+using Formatting = Newtonsoft.Json.Formatting;
 
-namespace PositronAPI.Models
+namespace PositronAPI.Models.Customer
 {
-    public class LoyaltyCard : IEquatable<LoyaltyCard>
+    public class Customer : IEquatable<Customer>
     {
         /// <summary>
-        /// ID of the loyalty card
+        /// Gets or Sets Id
         /// </summary>
+
         [DataMember(Name = "id")]
-        public int Id { get; set; }
-
-
-        /// <summary>
-        /// Gets or Sets CustomerId
-        /// </summary>
-
-        [DataMember(Name = "customerId")]
-        public string CustomerId { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
-        /// Gets or Sets Balance
+        /// Gets or Sets Name
         /// </summary>
 
-        [DataMember(Name = "balance")]
-        public decimal? Balance { get; set; }
+        [DataMember(Name = "name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Email
+        /// </summary>
+
+        [DataMember(Name = "email")]
+        public string Email { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -34,10 +36,10 @@ namespace PositronAPI.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class LoyaltyCard {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");    
-            sb.Append("  CustomerId: ").Append(CustomerId).Append("\n");
-            sb.Append("  Balance: ").Append(Balance).Append("\n");
+            sb.Append("class Customer {\n");
+            sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Email: ").Append(Email).Append("\n");
+            sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -60,31 +62,35 @@ namespace PositronAPI.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((LoyaltyCard)obj);
+            return obj.GetType() == GetType() && Equals((Customer)obj);
         }
 
         /// <summary>
-        /// Returns true if LoyaltyCard instances are equal
+        /// Returns true if Customer instances are equal
         /// </summary>
-        /// <param name="other">Instance of LoyaltyCard to be compared</param>
+        /// <param name="other">Instance of Customer to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(LoyaltyCard other)
+        public bool Equals(Customer other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
             return
                 (
-                    CustomerId == other.CustomerId ||
-                    CustomerId != null &&
-                    CustomerId.Equals(other.CustomerId)
+                    Name == other.Name ||
+                    Name != null &&
+                    Name.Equals(other.Name)
                 ) &&
                 (
-                    Balance == other.Balance ||
-                    Balance != null &&
-                    Balance.Equals(other.Balance)
+                    Email == other.Email ||
+                    Email != null &&
+                    Email.Equals(other.Email)
+                ) &&
+                (
+                    Id == other.Id ||
+                    Id != null &&
+                    Id.Equals(other.Id)
                 );
         }
-
     }
 }

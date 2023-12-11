@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace PositronAPI.Models
+namespace PositronAPI.Models.Coupons
 {
     public class Coupon : IEquatable<Coupon>
     {
@@ -11,7 +11,7 @@ namespace PositronAPI.Models
         /// </summary>
 
         [DataMember(Name = "id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Gets or Sets CustomerId
