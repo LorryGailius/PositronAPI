@@ -39,7 +39,7 @@ namespace PositronAPI.Models
         /// </summary>
 
         [DataMember(Name = "id")]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
