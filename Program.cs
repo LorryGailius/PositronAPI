@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PositronAPI.Context;
+using PositronAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Add our services
+builder.Services.AddScoped<CustomerService>();
+
+// Add our DbContext
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();

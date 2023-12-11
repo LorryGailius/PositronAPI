@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PositronAPI.Models;
+using PositronAPI.Models.Item;
 using System.ComponentModel.DataAnnotations;
 
 namespace PositronAPI.Controllers
@@ -13,7 +13,7 @@ namespace PositronAPI.Controllers
         /// <param name="body">Properties for creating a new item.</param>
         [HttpPost]
         [Route("/item")]
-        public virtual IActionResult CreateItem([FromBody] CreateItem body)
+        public virtual IActionResult CreateItem([FromBody] Item body)
         {
             return StatusCode(StatusCodes.Status501NotImplemented);
         }
@@ -25,7 +25,7 @@ namespace PositronAPI.Controllers
         /// <param name="itemId">The id of the item</param>
         [HttpDelete]
         [Route("/item/{itemId}")]
-        public virtual IActionResult DeleteItem([FromRoute][Required] string itemId)
+        public virtual IActionResult DeleteItem([FromRoute][Required] long itemId)
         {
             return StatusCode(StatusCodes.Status501NotImplemented);
         }
@@ -38,7 +38,7 @@ namespace PositronAPI.Controllers
         /// <param name="itemId">The id of the item</param>
         [HttpPut]
         [Route("/item/{itemId}")]
-        public virtual IActionResult EditItem([FromBody] CreateItem body, [FromRoute][Required] string itemId)
+        public virtual IActionResult EditItem([FromBody] Item body, [FromRoute][Required] long itemId)
         {
             return StatusCode(StatusCodes.Status501NotImplemented);
         }
@@ -50,7 +50,7 @@ namespace PositronAPI.Controllers
         /// <param name="itemId">The id of the item to get</param>
         [HttpGet]
         [Route("/item/{itemId}")]
-        public virtual IActionResult GetItem([FromRoute][Required] string itemId)
+        public virtual IActionResult GetItem([FromRoute][Required] long itemId)
         {
             return StatusCode(StatusCodes.Status501NotImplemented);
         }
