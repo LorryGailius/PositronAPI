@@ -13,11 +13,13 @@ namespace PositronAPI.Controllers
     {
         private readonly CustomerService _customerService;
         private readonly LoyaltyService _loyaltyService;
+        private readonly CouponService _couponService;
 
-        public CustomersController(CustomerService customerService, LoyaltyService loyaltyService)
+        public CustomersController(CustomerService customerService, LoyaltyService loyaltyService, CouponService couponService)
         {
             _customerService = customerService;
             _loyaltyService = loyaltyService;
+            _couponService = couponService;
         }
 
         // Customer Endpoints
@@ -29,8 +31,9 @@ namespace PositronAPI.Controllers
         /// <param name="body">Properties for creating a new customer.</param>
         [HttpPost]
         [Route("/customer")]
-        public async Task<ActionResult> CreateCustomer([FromBody] Customer body)
+        public async Task<ActionResult<Customer>> CreateCustomer([FromBody] Customer body)
         {
+            if (body == null) { return BadRequest(); }
             var response = await _customerService.CreateCustomer(body);
 
             if (response == null) { return BadRequest(); }
@@ -92,9 +95,12 @@ namespace PositronAPI.Controllers
         /// <param name="skip">The number of customers to skip over</param>
         [HttpGet]
         [Route("/customer")]
-        public async Task<ActionResult<List<Customer>>> GetCustomers([FromQuery] decimal? top, [FromQuery] decimal? skip)
+        public async Task<ActionResult<List<Customer>>> GetCustomers([FromQuery] int top, [FromQuery] int skip)
         {
-            var response = await _customerService.GetCustomers();
+            if (top < 0 || skip < 0) { return BadRequest(); }
+
+            var response = (top > 0 || skip > 0) ? await _customerService.GetCustomers(top, skip) : await _customerService.GetCustomers();
+
             if (!response.Any()) { return NoContent(); }
 
             return Ok(response);
@@ -107,7 +113,6 @@ namespace PositronAPI.Controllers
         /// </summary>
         /// <remarks>Creates a loyalty card.</remarks>
         /// <param name="body">Properties for creating a new loyalty card.</param>
-        /// <param name="customerId">The id of the loyalty card holder</param>
         [HttpPost]
         [Route("/customer/{customerId}/loyaltyCard")]
         public async Task<ActionResult> CreateLoyaltyCard([FromBody][Required] LoyaltyCard body)
@@ -152,51 +157,63 @@ namespace PositronAPI.Controllers
         /// </summary>
         /// <remarks>Creates a coupon.</remarks>
         /// <param name="body">Properties for creating a new coupon.</param>
-        /// <param name="customerId">The id of the coupon holder</param>
         [HttpPost]
         [Route("/customer/{customerId}/coupon")]
-        public virtual IActionResult CreateCoupon([FromBody] Coupon body, [FromRoute][Required] long customerId)
+        public async Task<ActionResult<Coupon>> CreateCoupon([FromBody][Required] Coupon body)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            var response = await _couponService.CreateCoupon(body);
+
+            if (response == null) { return BadRequest(); }
+
+            return Ok(response);
         }
 
         /// <summary>
         /// Remove a coupon
         /// </summary>
         /// <remarks>Deletes a coupon.</remarks>
-        /// <param name="customerId">The id of the coupon holder</param>
         /// <param name="couponId">The id of the coupon</param>
         [HttpDelete]
         [Route("/customer/{customerId}/coupon/{couponId}")]
-        public virtual IActionResult DeleteCoupon([FromRoute][Required] long customerId, [FromRoute][Required] long couponId)
+        public async Task<ActionResult> DeleteCoupon([FromRoute][Required] long couponId)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            var response = await _couponService.DeleteCoupon(couponId);
+
+            if (response == null) { return NotFound(); }
+
+            return NoContent();
         }
 
         /// <summary>
         /// Get a coupon of a customer
         /// </summary>
         /// <remarks>Gets a coupon.</remarks>
-        /// <param name="customerId">The id of the coupon holder</param>
         /// <param name="couponId">The id of the coupon</param>
         [HttpGet]
         [Route("/customer/{customerId}/coupon/{couponId}")]
-        public virtual IActionResult GetCoupon([FromRoute][Required] long customerId, [FromRoute][Required] long couponId)
+        public async Task<ActionResult<Coupon>> GetCoupon([FromRoute][Required] long couponId)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            var response = await _couponService.GetCoupon(couponId);
+
+            if (response == null) { return NotFound(); }
+
+            return Ok(response);
         }
 
         /// <summary>
         /// Gets coupons of a customer
         /// </summary>
-        /// <remarks>Gets couponss.</remarks>
+        /// <remarks>Gets coupons.</remarks>
         /// <param name="customerId">The id of the coupon holder</param>
         [HttpGet]
         [Route("/customer/{customerId}/coupon")]
-        public virtual IActionResult GetCoupons([FromRoute][Required] long customerId)
-        {
-            return StatusCode(StatusCodes.Status501NotImplemented);
-        }
+        public async Task<ActionResult<List<Coupon>>> GetCoupons([FromRoute][Required] long customerId)
+        {   
+            var response = await _couponService.GetCoupons(customerId);
 
+            if (!response.Any()) { return NoContent(); }
+
+            return Ok(response);
+        }
     }
 }
