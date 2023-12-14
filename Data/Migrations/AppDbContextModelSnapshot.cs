@@ -30,16 +30,14 @@ namespace PositronAPI.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<decimal?>("Ammount")
+                    b.Property<decimal?>("Amount")
                         .HasColumnType("numeric");
 
-                    b.Property<string>("CustomerId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<long>("CustomerId")
+                        .HasColumnType("bigint");
 
-                    b.Property<string>("ExpirationDate")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 

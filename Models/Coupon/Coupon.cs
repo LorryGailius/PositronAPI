@@ -28,11 +28,11 @@ namespace PositronAPI.Models.Coupons
         public DateTime ExpirationDate { get; set; }
 
         /// <summary>
-        /// Gets or Sets Ammount
+        /// Gets or Sets Amount
         /// </summary>
 
-        [DataMember(Name = "ammount")]
-        public decimal? Ammount { get; set; }
+        [DataMember(Name = "Amount")]
+        public decimal? Amount { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -45,7 +45,7 @@ namespace PositronAPI.Models.Coupons
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  CustomerId: ").Append(CustomerId).Append("\n");
             sb.Append("  ExpirationDate: ").Append(ExpirationDate).Append("\n");
-            sb.Append("  Ammount: ").Append(Ammount).Append("\n");
+            sb.Append("  Amount: ").Append(Amount).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -98,9 +98,9 @@ namespace PositronAPI.Models.Coupons
                     ExpirationDate.Equals(other.ExpirationDate)
                 ) &&
                 (
-                    Ammount == other.Ammount ||
-                    Ammount != null &&
-                    Ammount.Equals(other.Ammount)
+                    Amount == other.Amount ||
+                    Amount != null &&
+                    Amount.Equals(other.Amount)
                 );
         }
     }

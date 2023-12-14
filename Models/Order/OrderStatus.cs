@@ -1,4 +1,4 @@
-﻿namespace PositronAPI.Models
+﻿namespace PositronAPI.Models.Order
 {
     public enum OrderStatus
     {

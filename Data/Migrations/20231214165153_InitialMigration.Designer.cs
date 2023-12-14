@@ -12,7 +12,7 @@ using PositronAPI.Context;
 namespace PositronAPI.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231211221626_InitialMigration")]
+    [Migration("20231214165153_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -33,16 +33,14 @@ namespace PositronAPI.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<decimal?>("Ammount")
+                    b.Property<decimal?>("Amount")
                         .HasColumnType("numeric");
 
-                    b.Property<string>("CustomerId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<long>("CustomerId")
+                        .HasColumnType("bigint");
 
-                    b.Property<string>("ExpirationDate")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 

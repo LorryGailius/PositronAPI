@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -17,9 +18,9 @@ namespace PositronAPI.Data.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    CustomerId = table.Column<string>(type: "text", nullable: false),
-                    ExpirationDate = table.Column<string>(type: "text", nullable: false),
-                    Ammount = table.Column<decimal>(type: "numeric", nullable: true)
+                    CustomerId = table.Column<long>(type: "bigint", nullable: false),
+                    ExpirationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Amount = table.Column<decimal>(type: "numeric", nullable: true)
                 },
                 constraints: table =>
                 {
