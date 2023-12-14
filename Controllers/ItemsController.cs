@@ -1,11 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PositronAPI.Models.Customer;
 using PositronAPI.Models.Item;
+using PositronAPI.Services;
 using System.ComponentModel.DataAnnotations;
 
 namespace PositronAPI.Controllers
 {
     public class ItemsController : ControllerBase
     {
+        private readonly ItemService _itemService;
+
+        public ItemsController(ItemService itemService)
+        {
+            _itemService = itemService;
+        }
+
         /// <summary>
         /// Add an item
         /// </summary>
@@ -13,9 +22,12 @@ namespace PositronAPI.Controllers
         /// <param name="body">Properties for creating a new item.</param>
         [HttpPost]
         [Route("/item")]
-        public virtual IActionResult CreateItem([FromBody] Item body)
+        public async Task<ActionResult<Item>> CreateItem([FromBody] Item body)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            if(body == null) { return BadRequest(); }
+            var response = await _itemService.CreateItem(body);
+            if(response == null) { return BadRequest(); }
+            else { return Ok(response); }
         }
 
         /// <summary>
@@ -25,9 +37,12 @@ namespace PositronAPI.Controllers
         /// <param name="itemId">The id of the item</param>
         [HttpDelete]
         [Route("/item/{itemId}")]
-        public virtual IActionResult DeleteItem([FromRoute][Required] long itemId)
+        public async Task<ActionResult> DeleteItem([FromRoute][Required] long itemId)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            var response = await _itemService.DeleteItem(itemId);
+
+            if (response == null) { return NotFound(); }
+            return NoContent();
         }
 
         /// <summary>
@@ -38,9 +53,14 @@ namespace PositronAPI.Controllers
         /// <param name="itemId">The id of the item</param>
         [HttpPut]
         [Route("/item/{itemId}")]
-        public virtual IActionResult EditItem([FromBody] Item body, [FromRoute][Required] long itemId)
+        public async Task<ActionResult> EditItem([FromBody] Item body, [FromRoute][Required] long itemId)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            if (body.Id != 0 && body.Id != itemId) { return BadRequest(); }
+
+            var response = await _itemService.EditItem(body, itemId);
+
+            if (response == null) { return NotFound(); }
+            else { return Ok(response); }
         }
 
         /// <summary>
@@ -50,9 +70,9 @@ namespace PositronAPI.Controllers
         /// <param name="itemId">The id of the item to get</param>
         [HttpGet]
         [Route("/item/{itemId}")]
-        public virtual IActionResult GetItem([FromRoute][Required] long itemId)
+        public async Task<ActionResult<Item>> GetItem([FromRoute][Required] long itemId)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            return await _itemService.GetItem(itemId);
         }
 
         /// <summary>
@@ -64,9 +84,15 @@ namespace PositronAPI.Controllers
         /// <param name="categoryId">The id of the category to get</param>
         [HttpGet]
         [Route("/item")]
-        public virtual IActionResult GetItems([FromQuery] decimal? top, [FromQuery] decimal? skip, [FromQuery] ItemCategories categoryId)
+        public async Task<ActionResult<List<Item>>> GetItems([FromQuery] ItemCategories categoryId, [FromQuery] int top, [FromQuery] int skip)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            if (top < 0 || skip < 0) { return BadRequest(); }
+
+            var response = (top > 0 || skip > 0) ? await _itemService.GetItems(categoryId, top, skip) : await _itemService.GetItems(categoryId);
+
+            if (!response.Any()) { return NoContent(); }
+
+            return Ok(response);
         }
     }
 }

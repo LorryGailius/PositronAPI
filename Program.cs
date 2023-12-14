@@ -15,6 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<CustomerService>();
 builder.Services.AddScoped<LoyaltyService>();
 builder.Services.AddScoped<CouponService>();
+builder.Services.AddScoped<ItemService>();
 
 // Add our DbContext
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
