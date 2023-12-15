@@ -18,7 +18,10 @@ namespace PositronAPI.Models.Schedule
         [DataMember(Name = "date")]
         public DateTime Date { get; set; }
 
-
+        /// <summary>
+        /// Returns the string presentation of the object
+        /// </summary>
+        /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -31,11 +34,32 @@ namespace PositronAPI.Models.Schedule
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Returns the JSON string presentation of the object
+        /// </summary>
+        /// <returns>JSON string presentation of the object</returns>
         public string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
 
+        /// <summary>
+        /// Returns true if objects are equal
+        /// </summary>
+        /// <param name="obj">Object to be compared</param>
+        /// <returns>Boolean</returns>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return obj.GetType() == GetType() && Equals((Appointment)obj);
+        }
+
+        /// <summary>
+        /// Returns true if Appointment instances are equal
+        /// </summary>
+        /// <param name="other">Instance of Appointment to be compared</param>
+        /// <returns>Boolean</returns>
         public bool Equals(Appointment other)
         {
             if (ReferenceEquals(null, other)) return false;

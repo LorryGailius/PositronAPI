@@ -68,9 +68,9 @@ namespace PositronAPI.Models.Schedule
         }
 
         /// <summary>
-        /// Returns true if Department instances are equal
+        /// Returns true if Service instances are equal
         /// </summary>
-        /// <param name="other">Instance of Department to be compared</param>
+        /// <param name="other">Instance of Service to be compared</param>
         /// <returns>Boolean</returns>
         public bool Equals(Service other)
         {
