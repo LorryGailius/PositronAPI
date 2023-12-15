@@ -88,7 +88,7 @@ namespace PositronAPI.Services
         }
 
         // Get all items from the database, based on the category
-        public async Task<List<Item>> GetItems(ItemCategories category, int top = 10, int skip = 0)
+        public async Task<List<Item>> GetItems(ItemCategory category, int top = 10, int skip = 0)
         {
             return await _context.Items.Where(i => i.Category == category).Skip(skip).Take(top).ToListAsync();
         }

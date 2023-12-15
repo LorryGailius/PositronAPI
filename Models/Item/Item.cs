@@ -21,7 +21,7 @@ namespace PositronAPI.Models.Item
         public string Name { get; set; }
 
         [DataMember(Name = "category")]
-        public ItemCategories Category { get; set; }
+        public ItemCategory Category { get; set; }
 
         /// <summary>
         /// Gets or Sets Description

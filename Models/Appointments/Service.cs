@@ -25,7 +25,7 @@ namespace PositronAPI.Models.Schedule
         public decimal Price { get; set; }
 
         [DataMember(Name = "category")]
-        public ServiceCategories Category { get; set; }
+        public ServiceCategory Category { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

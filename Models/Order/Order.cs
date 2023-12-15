@@ -20,7 +20,7 @@ namespace PositronAPI.Models.Order
         public decimal Total { get; set; }
 
         [DataMember(Name = "taxCode")]
-        public TaxCodes TaxCode { get; set; }
+        public TaxCode TaxCode { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

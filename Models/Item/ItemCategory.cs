@@ -1,6 +1,6 @@
 ﻿namespace PositronAPI.Models.Item
 {
-    public enum ItemCategories
+    public enum ItemCategory
     {
         // Barbershop Categories
         Haircuts,

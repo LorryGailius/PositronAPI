@@ -1,6 +1,6 @@
 ﻿namespace PositronAPI.Models.Schedule
 {
-    public enum ServiceCategories
+    public enum ServiceCategory
     {
         Haircut,
         HairStyling,

@@ -83,7 +83,7 @@ namespace PositronAPI.Controllers
         /// <param name="categoryId">The id of the category to get</param>
         [HttpGet]
         [Route("/item")]
-        public async Task<ActionResult<List<Item>>> GetItems([FromQuery] ItemCategories categoryId, [FromQuery] int top, [FromQuery] int skip)
+        public async Task<ActionResult<List<Item>>> GetItems([FromQuery] ItemCategory categoryId, [FromQuery] int top, [FromQuery] int skip)
         {
             if (top < 0 || skip < 0) { return BadRequest(); }
 
