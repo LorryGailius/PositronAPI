@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace PositronAPI.Models.Coupons
+namespace PositronAPI.Models.Coupon
 {
     public class Coupon : IEquatable<Coupon>
     {
