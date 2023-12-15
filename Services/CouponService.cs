@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PositronAPI.Context;
-using PositronAPI.Models.Coupons;
+using PositronAPI.Models.Coupon;
 
 namespace PositronAPI.Services
 {

@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Xml;
 using Formatting = Newtonsoft.Json.Formatting;
 
 namespace PositronAPI.Models.Customer

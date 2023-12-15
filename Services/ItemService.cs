@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PositronAPI.Context;
 using PositronAPI.Models.Item;
-using System.Linq;
 
 namespace PositronAPI.Services
 {

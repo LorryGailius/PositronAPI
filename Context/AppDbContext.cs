@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PositronAPI.Models.Coupons;
+using PositronAPI.Models.Coupon;
 using PositronAPI.Models.Customer;
 using PositronAPI.Models.Item;
 using PositronAPI.Models.LoyaltyCard;

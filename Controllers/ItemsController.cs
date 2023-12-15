@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PositronAPI.Models.Customer;
 using PositronAPI.Models.Item;
 using PositronAPI.Services;
 using System.ComponentModel.DataAnnotations;
