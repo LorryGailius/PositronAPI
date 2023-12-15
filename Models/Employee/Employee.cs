@@ -27,6 +27,8 @@ namespace PositronAPI.Models.Employee
         [DataMember(Name = "role")]
         public Role Role { get; set; }
 
+        public Permission Permission { get; set; }
+
         /// <summary>
         /// Gets or Sets Wage
         /// </summary>
@@ -39,7 +41,7 @@ namespace PositronAPI.Models.Employee
         /// </summary>
 
         [DataMember(Name = "id")]
-        public string Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -52,6 +54,7 @@ namespace PositronAPI.Models.Employee
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Surname: ").Append(Surname).Append("\n");
             sb.Append("  Role: ").Append(Role).Append("\n");
+            sb.Append("  Permission: ").Append(Permission).Append("\n");
             sb.Append("  Wage: ").Append(Wage).Append("\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("}\n");
