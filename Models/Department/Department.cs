@@ -7,7 +7,7 @@ namespace PositronAPI.Models.Department
     public class Department : IEquatable<Department>
     {
         [DataMember(Name = "id")]
-        public string Id { get; set; }
+        public long Id { get; set; }
 
         [DataMember(Name = "managerId")]
         public string ManagerId { get; set; }
