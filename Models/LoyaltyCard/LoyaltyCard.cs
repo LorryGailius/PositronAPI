@@ -2,16 +2,29 @@
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace PositronAPI.Models
+namespace PositronAPI.Models.LoyaltyCard
 {
-    public class CreateLoyaltyCard : IEquatable<CreateLoyaltyCard>
+    public class LoyaltyCard : IEquatable<LoyaltyCard>
     {
+        /// <summary>
+        /// ID of the loyalty card
+        /// </summary>
+        [DataMember(Name = "id")]
+        public long Id { get; set; }
+
+        /// <summary>
+        /// Gets or Sets CustomerId
+        /// </summary>
+
+        [DataMember(Name = "customerId")]
+        public long CustomerId { get; set; }
+
         /// <summary>
         /// Gets or Sets Balance
         /// </summary>
 
         [DataMember(Name = "balance")]
-        public decimal? Balance { get; set; }
+        public decimal Balance { get; set; } = 0.0M;
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -20,7 +33,9 @@ namespace PositronAPI.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class CreateLoyaltyCard {\n");
+            sb.Append("class LoyaltyCard {\n");
+            sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("  CustomerId: ").Append(CustomerId).Append("\n");
             sb.Append("  Balance: ").Append(Balance).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -44,25 +59,37 @@ namespace PositronAPI.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((CreateLoyaltyCard)obj);
+            return obj.GetType() == GetType() && Equals((LoyaltyCard)obj);
         }
 
         /// <summary>
-        /// Returns true if CreateLoyaltyCard instances are equal
+        /// Returns true if LoyaltyCard instances are equal
         /// </summary>
-        /// <param name="other">Instance of CreateLoyaltyCard to be compared</param>
+        /// <param name="other">Instance of LoyaltyCard to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(CreateLoyaltyCard other)
+        public bool Equals(LoyaltyCard other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
             return
+
+                (
+                    Id == other.Id ||
+                    Id != null &&
+                    Id.Equals(other.Id)
+                ) &&
+                (
+                    CustomerId == other.CustomerId ||
+                    CustomerId != null &&
+                    CustomerId.Equals(other.CustomerId)
+                ) &&
                 (
                     Balance == other.Balance ||
                     Balance != null &&
                     Balance.Equals(other.Balance)
                 );
         }
+
     }
 }

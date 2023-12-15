@@ -2,44 +2,30 @@
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace PositronAPI.Models
+namespace PositronAPI.Models.Schedule
 {
-    public class Item : IEquatable<Item>
+    public class Service : IEquatable<Service>
     {
-        /// <summary>
-        /// Gets or Sets Name
-        /// </summary>
+        [DataMember(Name = "id")]
+        public long Id { get; set; }
+
+        [DataMember(Name = "employeeId")]
+        public long EmployeeId { get; set; }
 
         [DataMember(Name = "name")]
         public string Name { get; set; }
 
-        /// <summary>
-        /// Gets or Sets Description
-        /// </summary>
-
         [DataMember(Name = "description")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
-        /// <summary>
-        /// Gets or Sets Price
-        /// </summary>
+        [DataMember(Name = "duration")]
+        public TimeSpan Duration { get; set; }
 
         [DataMember(Name = "price")]
-        public decimal? Price { get; set; }
+        public decimal Price { get; set; }
 
-        /// <summary>
-        /// Gets or Sets Stock
-        /// </summary>
-
-        [DataMember(Name = "stock")]
-        public int? Stock { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Id
-        /// </summary>
-
-        [DataMember(Name = "id")]
-        public int Id { get; set; }
+        [DataMember(Name = "category")]
+        public ServiceCategory Category { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -48,11 +34,13 @@ namespace PositronAPI.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Item {\n");
+            sb.Append("class Services {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  EmployeeId: ").Append(EmployeeId).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
+            sb.Append("  Duration: ").Append(Duration).Append("\n");
             sb.Append("  Price: ").Append(Price).Append("\n");
-            sb.Append("  Stock: ").Append(Stock).Append("\n");
+            sb.Append("  Category: ").Append(Category).Append("\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -76,15 +64,15 @@ namespace PositronAPI.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Item)obj);
+            return obj.GetType() == GetType() && Equals((Service)obj);
         }
 
         /// <summary>
-        /// Returns true if Item instances are equal
+        /// Returns true if Service instances are equal
         /// </summary>
-        /// <param name="other">Instance of Item to be compared</param>
+        /// <param name="other">Instance of Service to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Item other)
+        public bool Equals(Service other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -96,9 +84,19 @@ namespace PositronAPI.Models
                     Name.Equals(other.Name)
                 ) &&
                 (
+                    EmployeeId == other.EmployeeId ||
+                    EmployeeId != null &&
+                    EmployeeId.Equals(other.EmployeeId)
+                )&&
+                (
                     Description == other.Description ||
                     Description != null &&
                     Description.Equals(other.Description)
+                ) &&
+                (
+                    Duration == other.Duration ||
+                    Duration != null &&
+                    Duration.Equals(other.Duration)
                 ) &&
                 (
                     Price == other.Price ||
@@ -106,9 +104,9 @@ namespace PositronAPI.Models
                     Price.Equals(other.Price)
                 ) &&
                 (
-                    Stock == other.Stock ||
-                    Stock != null &&
-                    Stock.Equals(other.Stock)
+                    Category == other.Category ||
+                    Category != null &&
+                    Category.Equals(other.Category)
                 ) &&
                 (
                     Id == other.Id ||

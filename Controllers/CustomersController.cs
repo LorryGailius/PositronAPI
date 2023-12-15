@@ -1,12 +1,25 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using PositronAPI.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using PositronAPI.Models.Coupon;
+using PositronAPI.Models.Customer;
+using PositronAPI.Models.LoyaltyCard;
+using PositronAPI.Services;
 using System.ComponentModel.DataAnnotations;
 
 namespace PositronAPI.Controllers
 {
     public class CustomersController : ControllerBase
     {
+        private readonly CustomerService _customerService;
+        private readonly LoyaltyService _loyaltyService;
+        private readonly CouponService _couponService;
+
+        public CustomersController(CustomerService customerService, LoyaltyService loyaltyService, CouponService couponService)
+        {
+            _customerService = customerService;
+            _loyaltyService = loyaltyService;
+            _couponService = couponService;
+        }
+
         // Customer Endpoints
 
         /// <summary>
@@ -16,9 +29,13 @@ namespace PositronAPI.Controllers
         /// <param name="body">Properties for creating a new customer.</param>
         [HttpPost]
         [Route("/customer")]
-        public IActionResult CreateCustomer([FromBody] CreateCustomer body)
+        public async Task<ActionResult<Customer>> CreateCustomer([FromBody] Customer body)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            if (body == null) { return BadRequest(); }
+            var response = await _customerService.CreateCustomer(body);
+
+            if (response == null) { return BadRequest(); }
+            else { return Ok(response); }
         }
 
         /// <summary>
@@ -28,9 +45,12 @@ namespace PositronAPI.Controllers
         /// <param name="customerId">The id of the customer</param>
         [HttpDelete]
         [Route("/customer/{customerId}")]
-        public virtual IActionResult DeleteCustomer([FromRoute][Required] string customerId)
+        public async Task<ActionResult> DeleteCustomer([FromRoute][Required] long customerId)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            var response = await _customerService.DeleteCustomer(customerId);
+
+            if (response == null) { return NotFound(); }
+            return NoContent();
         }
 
         /// <summary>
@@ -41,9 +61,14 @@ namespace PositronAPI.Controllers
         /// <param name="customerId">The id of the customer</param>
         [HttpPut]
         [Route("/customer/{customerId}")]
-        public virtual IActionResult EditCustomer([FromBody] CreateCustomer body, [FromRoute][Required] string customerId)
+        public async Task<ActionResult> EditCustomer([FromBody] Customer body, [FromRoute][Required] long customerId)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            if (body.Id != 0 && body.Id != customerId) { return BadRequest(); }
+
+            var response = await _customerService.EditCustomer(body, customerId);
+
+            if (response == null) { return NotFound(); }
+            return Ok(response);
         }
 
         /// <summary>
@@ -53,9 +78,11 @@ namespace PositronAPI.Controllers
         /// <param name="customerId">The id of the customer to get</param>
         [HttpGet]
         [Route("/customer/{customerId}")]
-        public virtual IActionResult GetCustomer([FromRoute][Required] string customerId)
+        public async Task<ActionResult<Customer>> GetCustomer([FromRoute][Required] long customerId)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            var response = await _customerService.GetCustomer(customerId);
+            if (response == null) { return NotFound(); }
+            return Ok(response);
         }
 
         /// <summary>
@@ -66,9 +93,15 @@ namespace PositronAPI.Controllers
         /// <param name="skip">The number of customers to skip over</param>
         [HttpGet]
         [Route("/customer")]
-        public virtual IActionResult GetCustomers([FromQuery] decimal? top, [FromQuery] decimal? skip)
+        public async Task<ActionResult<List<Customer>>> GetCustomers([FromQuery] int top, [FromQuery] int skip)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            if (top < 0 || skip < 0) { return BadRequest(); }
+
+            var response = (top > 0 || skip > 0) ? await _customerService.GetCustomers(top, skip) : await _customerService.GetCustomers();
+
+            if (!response.Any()) { return NoContent(); }
+
+            return Ok(response);
         }
 
         // Loyalty Card Endpoints
@@ -78,12 +111,14 @@ namespace PositronAPI.Controllers
         /// </summary>
         /// <remarks>Creates a loyalty card.</remarks>
         /// <param name="body">Properties for creating a new loyalty card.</param>
-        /// <param name="customerId">The id of the loyalty card holder</param>
         [HttpPost]
         [Route("/customer/{customerId}/loyaltyCard")]
-        public virtual IActionResult CreateLoyaltyCard([FromBody] CreateLoyaltyCard body, [FromRoute][Required] string customerId)
+        public async Task<ActionResult> CreateLoyaltyCard([FromBody][Required] LoyaltyCard body)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            var response = await _loyaltyService.CreateLoyaltyCard(body);
+
+            if (response == null) { return BadRequest(); }
+            return Ok(response);
         }
 
         /// <summary>
@@ -93,9 +128,12 @@ namespace PositronAPI.Controllers
         /// <param name="customerId">The id of the loyalty card holder</param>
         [HttpDelete]
         [Route("/customer/{customerId}/loyaltyCard")]
-        public virtual IActionResult DeleteLoyaltyCard([FromRoute][Required] string customerId)
+        public async Task<ActionResult> DeleteLoyaltyCard([FromRoute][Required] long customerId)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            var response = await _loyaltyService.DeleteLoyaltyCard(customerId);
+
+            if (response == null) { return NotFound(); }
+            return NoContent();
         }
 
         /// <summary>
@@ -105,9 +143,9 @@ namespace PositronAPI.Controllers
         /// <param name="customerId">The id of the loyalty card holder</param>
         [HttpGet]
         [Route("/customer/{customerId}/loyaltyCard")]
-        public virtual IActionResult GetLoyaltyCard([FromRoute][Required] string customerId)
+        public async Task<ActionResult<LoyaltyCard>> GetLoyaltyCard([FromRoute][Required] long customerId)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            return await _loyaltyService.GetLoyaltyCard(customerId);
         }
 
         // Coupon Endpoints
@@ -117,51 +155,63 @@ namespace PositronAPI.Controllers
         /// </summary>
         /// <remarks>Creates a coupon.</remarks>
         /// <param name="body">Properties for creating a new coupon.</param>
-        /// <param name="customerId">The id of the coupon holder</param>
         [HttpPost]
         [Route("/customer/{customerId}/coupon")]
-        public virtual IActionResult CreateCoupon([FromBody] CreateCoupon body, [FromRoute][Required] string customerId)
+        public async Task<ActionResult<Coupon>> CreateCoupon([FromBody][Required] Coupon body)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            var response = await _couponService.CreateCoupon(body);
+
+            if (response == null) { return BadRequest(); }
+
+            return Ok(response);
         }
 
         /// <summary>
         /// Remove a coupon
         /// </summary>
         /// <remarks>Deletes a coupon.</remarks>
-        /// <param name="customerId">The id of the coupon holder</param>
         /// <param name="couponId">The id of the coupon</param>
         [HttpDelete]
         [Route("/customer/{customerId}/coupon/{couponId}")]
-        public virtual IActionResult DeleteCoupon([FromRoute][Required] string customerId, [FromRoute][Required] string couponId)
+        public async Task<ActionResult> DeleteCoupon([FromRoute][Required] long couponId)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            var response = await _couponService.DeleteCoupon(couponId);
+
+            if (response == null) { return NotFound(); }
+
+            return NoContent();
         }
 
         /// <summary>
         /// Get a coupon of a customer
         /// </summary>
         /// <remarks>Gets a coupon.</remarks>
-        /// <param name="customerId">The id of the coupon holder</param>
         /// <param name="couponId">The id of the coupon</param>
         [HttpGet]
         [Route("/customer/{customerId}/coupon/{couponId}")]
-        public virtual IActionResult GetCoupon([FromRoute][Required] string customerId, [FromRoute][Required] string couponId)
+        public async Task<ActionResult<Coupon>> GetCoupon([FromRoute][Required] long couponId)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            var response = await _couponService.GetCoupon(couponId);
+
+            if (response == null) { return NotFound(); }
+
+            return Ok(response);
         }
 
         /// <summary>
         /// Gets coupons of a customer
         /// </summary>
-        /// <remarks>Gets couponss.</remarks>
+        /// <remarks>Gets coupons.</remarks>
         /// <param name="customerId">The id of the coupon holder</param>
         [HttpGet]
         [Route("/customer/{customerId}/coupon")]
-        public virtual IActionResult GetCoupons([FromRoute][Required] string customerId)
-        {
-            return StatusCode(StatusCodes.Status501NotImplemented);
-        }
+        public async Task<ActionResult<List<Coupon>>> GetCoupons([FromRoute][Required] long customerId)
+        {   
+            var response = await _couponService.GetCoupons(customerId);
 
+            if (!response.Any()) { return NoContent(); }
+
+            return Ok(response);
+        }
     }
 }

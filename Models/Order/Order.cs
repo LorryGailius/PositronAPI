@@ -1,31 +1,26 @@
 ﻿using Newtonsoft.Json;
+using PositronAPI.Models.Item;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace PositronAPI.Models
+namespace PositronAPI.Models.Order
 {
-    public class CreateCoupon : IEquatable<CreateCoupon>
+    public class Order : IEquatable<Order>
     {
-        /// <summary>
-        /// Gets or Sets CustomerId
-        /// </summary>
+        [DataMember(Name = "id")]
+        public long Id { get; set; }
 
         [DataMember(Name = "customerId")]
-        public string CustomerId { get; set; }
+        public long CustomerId { get; set; }
 
-        /// <summary>
-        /// Gets or Sets ExpirationDate
-        /// </summary>
+        [DataMember(Name = "status")]
+        public OrderStatus Status { get; set; }
 
-        [DataMember(Name = "expirationDate")]
-        public string ExpirationDate { get; set; }
+        [DataMember(Name = "total")]
+        public decimal Total { get; set; }
 
-        /// <summary>
-        /// Gets or Sets Ammount
-        /// </summary>
-
-        [DataMember(Name = "ammount")]
-        public decimal? Ammount { get; set; }
+        [DataMember(Name = "taxCode")]
+        public TaxCode TaxCode { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -34,10 +29,12 @@ namespace PositronAPI.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class CreateCoupon {\n");
+            sb.Append("class Order {\n");
+            sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  CustomerId: ").Append(CustomerId).Append("\n");
-            sb.Append("  ExpirationDate: ").Append(ExpirationDate).Append("\n");
-            sb.Append("  Ammount: ").Append(Ammount).Append("\n");
+            sb.Append("  Status: ").Append(Status).Append("\n");
+            sb.Append("  Total: ").Append(Total).Append("\n");
+            sb.Append("  TaxCode: ").Append(TaxCode).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -60,36 +57,46 @@ namespace PositronAPI.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((CreateCoupon)obj);
+            return obj.GetType() == GetType() && Equals((Order)obj);
         }
 
+
         /// <summary>
-        /// Returns true if CreateCoupon instances are equal
+        /// Returns true if Order instances are equal
         /// </summary>
-        /// <param name="other">Instance of CreateCoupon to be compared</param>
+        /// <param name="other">Instance of Order to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(CreateCoupon other)
+        public bool Equals(Order other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
             return
                 (
+                    Id == other.Id ||
+                    Id != null &&
+                    Id.Equals(other.Id)
+                ) &&
+                (
                     CustomerId == other.CustomerId ||
                     CustomerId != null &&
                     CustomerId.Equals(other.CustomerId)
                 ) &&
                 (
-                    ExpirationDate == other.ExpirationDate ||
-                    ExpirationDate != null &&
-                    ExpirationDate.Equals(other.ExpirationDate)
+                    Status == other.Status ||
+                    Status != null &&
+                    Status.Equals(other.Status)
                 ) &&
                 (
-                    Ammount == other.Ammount ||
-                    Ammount != null &&
-                    Ammount.Equals(other.Ammount)
+                    Total == other.Total ||
+                    Total != null &&
+                    Total.Equals(other.Total)
+                ) &&
+                (
+                    TaxCode == other.TaxCode ||
+                    TaxCode != null &&
+                    TaxCode.Equals(other.TaxCode)
                 );
         }
-
     }
 }

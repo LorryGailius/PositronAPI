@@ -1,12 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Xml;
-using Formatting = Newtonsoft.Json.Formatting;
 
-namespace PositronAPI.Models
+namespace PositronAPI.Models.Employee
 {
-    public class Customer : IEquatable<Customer>
+    public class Employee
     {
         /// <summary>
         /// Gets or Sets Name
@@ -16,18 +14,32 @@ namespace PositronAPI.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or Sets Email
+        /// Gets or Sets Surname
         /// </summary>
 
-        [DataMember(Name = "email")]
-        public string Email { get; set; }
+        [DataMember(Name = "surname")]
+        public string Surname { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Role
+        /// </summary>
+
+        [DataMember(Name = "role")]
+        public Role Role { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Wage
+        /// </summary>
+
+        [DataMember(Name = "wage")]
+        public decimal? Wage { get; set; }
 
         /// <summary>
         /// Gets or Sets Id
         /// </summary>
 
         [DataMember(Name = "id")]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -36,9 +48,11 @@ namespace PositronAPI.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Customer {\n");
+            sb.Append("class Employee {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Email: ").Append(Email).Append("\n");
+            sb.Append("  Surname: ").Append(Surname).Append("\n");
+            sb.Append("  Role: ").Append(Role).Append("\n");
+            sb.Append("  Wage: ").Append(Wage).Append("\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -62,15 +76,15 @@ namespace PositronAPI.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Customer)obj);
+            return obj.GetType() == GetType() && Equals((Employee)obj);
         }
 
         /// <summary>
-        /// Returns true if Customer instances are equal
+        /// Returns true if Employee instances are equal
         /// </summary>
-        /// <param name="other">Instance of Customer to be compared</param>
+        /// <param name="other">Instance of Employee to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Customer other)
+        public bool Equals(Employee other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -82,9 +96,19 @@ namespace PositronAPI.Models
                     Name.Equals(other.Name)
                 ) &&
                 (
-                    Email == other.Email ||
-                    Email != null &&
-                    Email.Equals(other.Email)
+                    Surname == other.Surname ||
+                    Surname != null &&
+                    Surname.Equals(other.Surname)
+                ) &&
+                (
+                    Role == other.Role ||
+                    Role != null &&
+                    Role.Equals(other.Role)
+                ) &&
+                (
+                    Wage == other.Wage ||
+                    Wage != null &&
+                    Wage.Equals(other.Wage)
                 ) &&
                 (
                     Id == other.Id ||

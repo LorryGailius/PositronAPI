@@ -2,23 +2,18 @@
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace PositronAPI.Models
+namespace PositronAPI.Models.Department
 {
-    public class CreateCustomer : IEquatable<CreateCustomer>
+    public class Department : IEquatable<Department>
     {
-        /// <summary>
-        /// Gets or Sets Name
-        /// </summary>
+        [DataMember(Name = "id")]
+        public string Id { get; set; }
+
+        [DataMember(Name = "managerId")]
+        public string ManagerId { get; set; }
 
         [DataMember(Name = "name")]
         public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Email
-        /// </summary>
-
-        [DataMember(Name = "email")]
-        public string Email { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -27,9 +22,10 @@ namespace PositronAPI.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class CreateCustomer {\n");
+            sb.Append("class Department {\n");
+            sb.Append("  ManagerId: ").Append(ManagerId).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Email: ").Append(Email).Append("\n");
+            sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -52,30 +48,36 @@ namespace PositronAPI.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((CreateCustomer)obj);
+            return obj.GetType() == GetType() && Equals((Department)obj);
         }
 
         /// <summary>
-        /// Returns true if CreateCustomer instances are equal
+        /// Returns true if Department instances are equal
         /// </summary>
-        /// <param name="other">Instance of CreateCustomer to be compared</param>
+        /// <param name="other">Instance of Department to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(CreateCustomer other)
+        public bool Equals(Department other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
             return
                 (
+                    ManagerId == other.ManagerId ||
+                    ManagerId != null &&
+                    ManagerId.Equals(other.ManagerId)
+                ) &&
+                (
                     Name == other.Name ||
                     Name != null &&
                     Name.Equals(other.Name)
                 ) &&
                 (
-                    Email == other.Email ||
-                    Email != null &&
-                    Email.Equals(other.Email)
+                    Id == other.Id ||
+                    Id != null &&
+                    Id.Equals(other.Id)
                 );
         }
+
     }
 }

@@ -1,38 +1,32 @@
 ﻿using Newtonsoft.Json;
 using System.Runtime.Serialization;
 using System.Text;
+using Formatting = Newtonsoft.Json.Formatting;
 
-namespace PositronAPI.Models
+namespace PositronAPI.Models.Customer
 {
-    public class Coupon : IEquatable<Coupon>
+    public class Customer : IEquatable<Customer>
     {
         /// <summary>
         /// Gets or Sets Id
         /// </summary>
 
         [DataMember(Name = "id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
-        /// Gets or Sets CustomerId
+        /// Gets or Sets Name
         /// </summary>
 
-        [DataMember(Name = "customerId")]
-        public string CustomerId { get; set; }
+        [DataMember(Name = "name")]
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets or Sets ExpirationDate
+        /// Gets or Sets Email
         /// </summary>
 
-        [DataMember(Name = "expirationDate")]
-        public string ExpirationDate { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Ammount
-        /// </summary>
-
-        [DataMember(Name = "ammount")]
-        public decimal? Ammount { get; set; }
+        [DataMember(Name = "email")]
+        public string Email { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -41,11 +35,10 @@ namespace PositronAPI.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Coupon {\n");
+            sb.Append("class Customer {\n");
+            sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Email: ").Append(Email).Append("\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  CustomerId: ").Append(CustomerId).Append("\n");
-            sb.Append("  ExpirationDate: ").Append(ExpirationDate).Append("\n");
-            sb.Append("  Ammount: ").Append(Ammount).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -68,39 +61,34 @@ namespace PositronAPI.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Coupon)obj);
+            return obj.GetType() == GetType() && Equals((Customer)obj);
         }
 
         /// <summary>
-        /// Returns true if Coupon instances are equal
+        /// Returns true if Customer instances are equal
         /// </summary>
-        /// <param name="other">Instance of Coupon to be compared</param>
+        /// <param name="other">Instance of Customer to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Coupon other)
+        public bool Equals(Customer other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
             return
                 (
+                    Name == other.Name ||
+                    Name != null &&
+                    Name.Equals(other.Name)
+                ) &&
+                (
+                    Email == other.Email ||
+                    Email != null &&
+                    Email.Equals(other.Email)
+                ) &&
+                (
                     Id == other.Id ||
                     Id != null &&
                     Id.Equals(other.Id)
-                ) &&
-                (
-                    CustomerId == other.CustomerId ||
-                    CustomerId != null &&
-                    CustomerId.Equals(other.CustomerId)
-                ) &&
-                (
-                    ExpirationDate == other.ExpirationDate ||
-                    ExpirationDate != null &&
-                    ExpirationDate.Equals(other.ExpirationDate)
-                ) &&
-                (
-                    Ammount == other.Ammount ||
-                    Ammount != null &&
-                    Ammount.Equals(other.Ammount)
                 );
         }
     }
