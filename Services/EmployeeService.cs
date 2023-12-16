@@ -21,7 +21,6 @@ namespace PositronAPI.Services
                 Name = employee.Name,
                 Surname = employee.Surname,
                 Role = employee.Role,
-                Permission = employee.Permission,
                 Wage = employee.Wage,
 
             };
@@ -55,22 +54,7 @@ namespace PositronAPI.Services
             existingemployee.Name = employee.Name;
             existingemployee.Surname = employee.Surname;
             existingemployee.Role = employee.Role;
-            existingemployee.Permission = employee.Permission;
             existingemployee.Wage = employee.Wage;
-
-            await _context.SaveChangesAsync();
-
-            return existingemployee;
-        }
-
-        public async Task<Employee> EditPermissions(long employeeId, Permission permission)
-        {
-            var existingemployee = await _context.Employees.FindAsync(employeeId);
-            if (existingemployee == null)
-            {
-                return null;
-            }
-            existingemployee.Permission = permission;
 
             await _context.SaveChangesAsync();
 

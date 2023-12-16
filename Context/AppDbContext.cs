@@ -22,8 +22,6 @@ namespace PositronAPI.Context
 
         public DbSet<Employee> Employees { get; set; }
 
-        public DbSet<Schedule> Schedules { get; set; }
-
         public DbSet<Department> Departments { get; set; }
 
     }
