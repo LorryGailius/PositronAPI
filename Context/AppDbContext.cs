@@ -3,6 +3,8 @@ using PositronAPI.Models.Coupon;
 using PositronAPI.Models.Customer;
 using PositronAPI.Models.Item;
 using PositronAPI.Models.LoyaltyCard;
+using PositronAPI.Models.Employee;
+using PositronAPI.Models.Department;
 
 namespace PositronAPI.Context
 {
@@ -17,6 +19,10 @@ namespace PositronAPI.Context
         public DbSet<Item> Items { get; set; }
 
         public DbSet<LoyaltyCard> LoyaltyCards { get; set; }
+
+        public DbSet<Employee> Employees { get; set; }
+
+        public DbSet<Department> Departments { get; set; }
 
     }
 }

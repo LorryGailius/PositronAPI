@@ -7,10 +7,10 @@ namespace PositronAPI.Models.Order
     public class ItemOrder : IEquatable<ItemOrder>
     {
         [DataMember(Name = "orderId")]
-        public int OrderId { get; set; }
+        public long OrderId { get; set; }
 
         [DataMember(Name = "itemId")]
-        public int ItemId { get; set; }
+        public long ItemId { get; set; }
 
         [DataMember(Name = "quantity")]
         public int Quantity { get; set; }
