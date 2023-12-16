@@ -7,10 +7,10 @@ namespace PositronAPI.Models.Order
     public class ServiceOrder
     {
         [DataMember(Name = "orderId")]
-        public int OrderId { get; set; }
+        public long OrderId { get; set; }
 
         [DataMember(Name = "serviceId")]
-        public int ServiceId { get; set; }
+        public long ServiceId { get; set; }
 
         [DataMember(Name = "quantity")]
         public int Quantity { get; set; }

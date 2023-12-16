@@ -10,7 +10,7 @@ namespace PositronAPI.Models.Department
         public long Id { get; set; }
 
         [DataMember(Name = "managerId")]
-        public string ManagerId { get; set; }
+        public long ManagerId { get; set; }
 
         [DataMember(Name = "name")]
         public string Name { get; set; }
