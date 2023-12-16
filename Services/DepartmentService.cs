@@ -27,7 +27,7 @@ namespace PositronAPI.Services
             return newDepartment;
         }
 
-        public async Task<Department> DeleteCustomer(long departmentId)
+        public async Task<Department> DeleteDepartment(long departmentId)
         {
             var department = await _context.Departments.FindAsync(departmentId);
             if (department == null)
@@ -67,7 +67,7 @@ namespace PositronAPI.Services
             return department;
         }
 
-        public async Task<List<Department>> GetDepartments(int top = 10, int skip = 0, string categoryId="0")
+        public async Task<List<Department>> GetDepartments(int top = 10, int skip = 0)
         {
             return await _context.Departments.Skip(skip).Take(top).ToListAsync();
         }
