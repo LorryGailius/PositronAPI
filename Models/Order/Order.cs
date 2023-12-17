@@ -11,7 +11,7 @@ namespace PositronAPI.Models.Order
         public long Id { get; set; }
 
         [DataMember(Name = "customerId")]
-        public long CustomerId { get; set; }
+        public long? CustomerId { get; set; }
 
         [DataMember(Name = "status")]
         public OrderStatus Status { get; set; }
