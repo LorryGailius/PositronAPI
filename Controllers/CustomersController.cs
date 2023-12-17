@@ -101,7 +101,7 @@ namespace PositronAPI.Controllers
 
             var response = (top > 0 || skip > 0) ? await _customerService.GetCustomers(top, skip) : await _customerService.GetCustomers();
 
-            if (!response.Any()) { return NoContent(); }
+            if (response.Count == 0) { return NoContent(); }
 
             return Ok(response);
         }
@@ -211,7 +211,7 @@ namespace PositronAPI.Controllers
         {   
             var response = await _couponService.GetCoupons(customerId);
 
-            if (!response.Any()) { return NoContent(); }
+            if (response.Count == 0) { return NoContent(); }
 
             return Ok(response);
         }
