@@ -6,6 +6,9 @@ namespace PositronAPI.Models.Order
 {
     public class ItemOrder : IEquatable<ItemOrder>
     {
+        [DataMember(Name = "id")]
+        public long Id { get; set; }
+
         [DataMember(Name = "orderId")]
         public long OrderId { get; set; }
 
