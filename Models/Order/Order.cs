@@ -14,10 +14,10 @@ namespace PositronAPI.Models.Order
         public long? CustomerId { get; set; }
 
         [DataMember(Name = "status")]
-        public OrderStatus Status { get; set; }
+        public OrderStatus Status { get; set; } = OrderStatus.Pending;
 
         [DataMember(Name = "total")]
-        public decimal Total { get; set; }
+        public decimal Total { get; set; } = 0.0M;
 
         [DataMember(Name = "taxCode")]
         public TaxCode TaxCode { get; set; }
