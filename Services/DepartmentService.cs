@@ -41,7 +41,6 @@ namespace PositronAPI.Services
                 return null;
             }
 
-            existingDepartment.Id = department.Id;
             existingDepartment.ManagerId = department.ManagerId;
             existingDepartment.Name = department.Name;
 
