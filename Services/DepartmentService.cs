@@ -15,16 +15,9 @@ namespace PositronAPI.Services
 
         public async Task<Department> CreateDepartment(Department department)
         {
-            Department newDepartment= new()
-            {
-                Name = department.Name,
-                Id = department.Id,
-                ManagerId = department.ManagerId,
-            };
-
-            _context.Departments.Add(newDepartment);
+            _context.Departments.Add(department);
             await _context.SaveChangesAsync();
-            return newDepartment;
+            return department;
         }
 
         public async Task<Department> DeleteDepartment(long departmentId)

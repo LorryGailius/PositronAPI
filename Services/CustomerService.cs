@@ -16,15 +16,9 @@ namespace PositronAPI.Services
         // Add a customer
         public async Task<Customer> CreateCustomer(Customer customer)
         {
-            Customer newCustomer = new Customer
-            {
-                Name = customer.Name,
-                Email = customer.Email
-            };
-
-            _context.Customers.Add(newCustomer);
+            _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
-            return newCustomer;
+            return customer;
         }
 
         // Remove a customer
