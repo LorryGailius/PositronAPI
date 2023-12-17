@@ -68,23 +68,19 @@ namespace PositronAPI.Models.Order
 
             return
                 (
-                    OrderId == other.OrderId ||
-                    OrderId != null &&
+                    OrderId == other.OrderId &&
                     OrderId.Equals(other.OrderId)
                 ) &&
                 (
-                    ItemId == other.ItemId ||
-                    ItemId != null &&
+                    ItemId == other.ItemId &&
                     ItemId.Equals(other.ItemId)
                 ) &&
                 (
-                    Quantity == other.Quantity ||
-                    Quantity != null &&
+                    Quantity == other.Quantity &&
                     Quantity.Equals(other.Quantity)
                 ) &&
                 (
-                    Subtotal == other.Subtotal ||
-                    Subtotal != null &&
+                    Subtotal == other.Subtotal &&
                     Subtotal.Equals(other.Subtotal)
                 );
         }

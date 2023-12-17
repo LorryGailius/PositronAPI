@@ -74,28 +74,23 @@ namespace PositronAPI.Models.Payment
 
             return
                 (
-                Id == other.Id ||
-                    Id != null &&
+                Id == other.Id &&
                     Id.Equals(other.Id)
                 ) &&
                 (
-                    OrderId == other.OrderId ||
-                    OrderId != null &&
+                    OrderId == other.OrderId &&
                     OrderId.Equals(other.OrderId)
                 ) &&
                 (
-                    Amount == other.Amount ||
-                    Amount != null &&
+                    Amount == other.Amount &&
                     Amount.Equals(other.Amount)
                 ) &&
                 (
-                    PaymentMethod == other.PaymentMethod ||
-                    PaymentMethod != null &&
+                    PaymentMethod == other.PaymentMethod &&
                     PaymentMethod.Equals(other.PaymentMethod)
                 ) &&
                 (
-                    CreatedAt == other.CreatedAt ||
-                    CreatedAt != null &&
+                    CreatedAt == other.CreatedAt &&
                     CreatedAt.Equals(other.CreatedAt)
                 );
         }

@@ -26,7 +26,7 @@ namespace PositronAPI.Models.Customer
         /// </summary>
 
         [DataMember(Name = "email")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -86,8 +86,7 @@ namespace PositronAPI.Models.Customer
                     Email.Equals(other.Email)
                 ) &&
                 (
-                    Id == other.Id ||
-                    Id != null &&
+                    Id == other.Id &&
                     Id.Equals(other.Id)
                 );
         }

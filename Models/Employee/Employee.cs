@@ -101,18 +101,15 @@ namespace PositronAPI.Models.Employee
                     Surname.Equals(other.Surname)
                 ) &&
                 (
-                    Role == other.Role ||
-                    Role != null &&
+                    Role == other.Role &&
                     Role.Equals(other.Role)
                 ) &&
                 (
-                    Wage == other.Wage ||
-                    Wage != null &&
+                    Wage == other.Wage &&
                     Wage.Equals(other.Wage)
                 ) &&
                 (
-                    Id == other.Id ||
-                    Id != null &&
+                    Id == other.Id &&
                     Id.Equals(other.Id)
                 );
         }

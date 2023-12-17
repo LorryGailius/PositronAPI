@@ -73,28 +73,23 @@ namespace PositronAPI.Models.Order
 
             return
                 (
-                    Id == other.Id ||
-                    Id != null &&
+                    Id == other.Id &&
                     Id.Equals(other.Id)
                 ) &&
                 (
-                    CustomerId == other.CustomerId ||
-                    CustomerId != null &&
+                    CustomerId == other.CustomerId&&
                     CustomerId.Equals(other.CustomerId)
                 ) &&
                 (
-                    Status == other.Status ||
-                    Status != null &&
+                    Status == other.Status &&
                     Status.Equals(other.Status)
                 ) &&
                 (
-                    Total == other.Total ||
-                    Total != null &&
+                    Total == other.Total &&
                     Total.Equals(other.Total)
                 ) &&
                 (
-                    TaxCode == other.TaxCode ||
-                    TaxCode != null &&
+                    TaxCode == other.TaxCode &&
                     TaxCode.Equals(other.TaxCode)
                 );
         }

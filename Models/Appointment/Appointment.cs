@@ -67,23 +67,19 @@ namespace PositronAPI.Models.Schedule
 
             return
                 (
-                    Id == other.Id ||
-                    Id != null &&
+                    Id == other.Id &&
                     Id.Equals(other.Id)
                 ) &&
                 (
-                    CustomerId == other.CustomerId ||
-                    CustomerId != null &&
+                    CustomerId == other.CustomerId &&
                     CustomerId.Equals(other.CustomerId)
                 ) &&
                 (
-                    ServiceId == other.ServiceId ||
-                    ServiceId != null &&
+                    ServiceId == other.ServiceId &&
                     ServiceId.Equals(other.ServiceId)
                 ) &&
                 (
-                    Date == other.Date ||
-                    Date != null &&
+                    Date == other.Date &&
                     Date.Equals(other.Date)
                 );
         }

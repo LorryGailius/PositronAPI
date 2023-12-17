@@ -63,8 +63,7 @@ namespace PositronAPI.Models.Department
 
             return
                 (
-                    ManagerId == other.ManagerId ||
-                    ManagerId != null &&
+                    ManagerId == other.ManagerId &&
                     ManagerId.Equals(other.ManagerId)
                 ) &&
                 (
@@ -73,8 +72,7 @@ namespace PositronAPI.Models.Department
                     Name.Equals(other.Name)
                 ) &&
                 (
-                    Id == other.Id ||
-                    Id != null &&
+                    Id == other.Id &&
                     Id.Equals(other.Id)
                 );
         }

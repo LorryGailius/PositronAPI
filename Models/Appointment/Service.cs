@@ -84,8 +84,7 @@ namespace PositronAPI.Models.Schedule
                     Name.Equals(other.Name)
                 ) &&
                 (
-                    EmployeeId == other.EmployeeId ||
-                    EmployeeId != null &&
+                    EmployeeId == other.EmployeeId &&
                     EmployeeId.Equals(other.EmployeeId)
                 )&&
                 (
@@ -94,23 +93,19 @@ namespace PositronAPI.Models.Schedule
                     Description.Equals(other.Description)
                 ) &&
                 (
-                    Duration == other.Duration ||
-                    Duration != null &&
+                    Duration == other.Duration &&
                     Duration.Equals(other.Duration)
                 ) &&
                 (
-                    Price == other.Price ||
-                    Price != null &&
+                    Price == other.Price &&
                     Price.Equals(other.Price)
                 ) &&
                 (
-                    Category == other.Category ||
-                    Category != null &&
+                    Category == other.Category &&
                     Category.Equals(other.Category)
                 ) &&
                 (
-                    Id == other.Id ||
-                    Id != null &&
+                    Id == other.Id &&
                     Id.Equals(other.Id)
                 );
         }
