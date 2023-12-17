@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PositronAPI.Context;
 using PositronAPI.Models.Employee;
 
-namespace PositronAPI.Services
+namespace PositronAPI.Services.EmployeeService
 {
     public class EmployeeService
     {

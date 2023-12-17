@@ -2,7 +2,7 @@
 using PositronAPI.Context;
 using PositronAPI.Models.Customer;
 
-namespace PositronAPI.Services
+namespace PositronAPI.Services.CustomerService
 {
     public class CustomerService
     {

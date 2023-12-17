@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PositronAPI.Models.Item;
-using PositronAPI.Services;
+using PositronAPI.Services.ItemService;
 using System.ComponentModel.DataAnnotations;
 
 namespace PositronAPI.Controllers

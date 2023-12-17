@@ -2,7 +2,7 @@
 using PositronAPI.Context;
 using PositronAPI.Models.Coupon;
 
-namespace PositronAPI.Services
+namespace PositronAPI.Services.CouponService
 {
     public class CouponService
     {

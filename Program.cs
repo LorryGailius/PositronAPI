@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using PositronAPI.Context;
-using PositronAPI.Services;
+using PositronAPI.Services.CouponService;
+using PositronAPI.Services.CustomerService;
+using PositronAPI.Services.ItemService;
+using PositronAPI.Services.LoyaltyService;
 
 var builder = WebApplication.CreateBuilder(args);
 

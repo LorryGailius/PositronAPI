@@ -2,7 +2,7 @@
 using PositronAPI.Context;
 using PositronAPI.Models.Department;
 
-namespace PositronAPI.Services
+namespace PositronAPI.Services.DepartmentService
 {
     public class DepartmentService
     {
