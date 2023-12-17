@@ -41,9 +41,9 @@ namespace PositronAPI.Services
         }
 
         // Get a loyalty card
-        public async Task<LoyaltyCard> GetLoyaltyCard(long customerId)
+        public async Task<LoyaltyCard> GetLoyaltyCard(long loyaltyCardId)
         {
-            return await _context.LoyaltyCards.FindAsync(customerId);
+            return await _context.LoyaltyCards.FindAsync(loyaltyCardId);
         }
 
 
