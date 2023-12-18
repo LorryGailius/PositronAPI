@@ -30,14 +30,17 @@ namespace PositronAPI.Controllers
         [Route("/customer")]
         public async Task<ActionResult<Customer>> CreateCustomer([FromBody] Customer body)
         {
-            if (body == null || String.IsNullOrEmpty(body.Name)) { return BadRequest(); }
+            if (IsValidCustomer(body))
+            {
+                var newCustomer = new Customer { Name = body.Name, Email = body.Email };
 
-            var newCustomer = new Customer { Name = body.Name, Email = body.Email };
+                var response = await _customerService.CreateCustomer(newCustomer);
 
-            var response = await _customerService.CreateCustomer(newCustomer);
+                if (response == null) { return BadRequest(); }
+                else { return Ok(response); }
+            }
 
-            if (response == null) { return BadRequest(); }
-            else { return Ok(response); }
+            return BadRequest("Given object is not valid");
         }
 
         /// <summary>
@@ -148,6 +151,14 @@ namespace PositronAPI.Controllers
         public async Task<ActionResult<LoyaltyCard>> GetLoyaltyCard([FromRoute][Required] long customerId)
         {
             return await _loyaltyService.GetLoyaltyCard(customerId);
+        }
+
+        public bool IsValidCustomer(Customer customer)
+        {
+            if (customer == null ||
+               String.IsNullOrEmpty(customer.Name)) { return false; }
+
+            return true;
         }
     }
 }

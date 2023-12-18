@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PositronAPI.Models.Schedule;
+using PositronAPI.Services.EmployeeService;
 using PositronAPI.Services.ServicesService;
 using System.ComponentModel.DataAnnotations;
 
@@ -8,21 +9,28 @@ namespace PositronAPI.Controllers
     public class ServicesController : ControllerBase
     {
         private readonly ServicesService _servicesService;
+        private readonly EmployeeService _employeeService;
 
-        public ServicesController(ServicesService servicesService)
+
+        public ServicesController(ServicesService servicesService, EmployeeService employeeService)
         {
             _servicesService = servicesService;
+            _employeeService = employeeService;
         }
 
         [HttpPost]
         [Route("/service")]
         public async Task<ActionResult<Service>> CreateService([FromBody] Service body)
         {
-            if (body == null) { return BadRequest(); }
-            var response = await _servicesService.CreateService(body);
+            if (await IsValidService(body))
+            {
+                var response = await _servicesService.CreateService(body);
 
-            if (response == null) { return BadRequest(); }
-            else { return Ok(response); }
+                if (response == null) { return BadRequest(); }
+                else { return Ok(response); }
+            }
+
+            return BadRequest("Given object is not valid");
         }
 
         [HttpDelete]
@@ -67,6 +75,18 @@ namespace PositronAPI.Controllers
 
             if (response == null) { return NotFound(); }
             else { return Ok(response); }
+        }
+
+        public async Task<bool> IsValidService(Service service)
+        {
+            if (String.IsNullOrEmpty(service.Name) ||
+               service.Price == 0 ||
+               service.Duration < TimeSpan.Zero ||
+               service.Duration == TimeSpan.Zero ||
+               service.Duration > TimeSpan.FromHours(24) ||
+               await _employeeService.GetEmployee(service.EmployeeId) == null) { return false; }
+
+            return true;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PositronAPI.Models.Coupon;
 using PositronAPI.Services.CouponService;
+using PositronAPI.Services.CustomerService;
 using System.ComponentModel.DataAnnotations;
 
 namespace PositronAPI.Controllers
@@ -8,10 +9,12 @@ namespace PositronAPI.Controllers
     public class CouponsController : ControllerBase
     {
         private readonly CouponService _couponService;
+        private readonly CustomerService _customerService;
 
-        public CouponsController(CouponService couponService)
+        public CouponsController(CouponService couponService, CustomerService customerService)
         {
             _couponService = couponService;
+            _customerService = customerService;
         }
 
         // Coupon Endpoints
@@ -26,14 +29,17 @@ namespace PositronAPI.Controllers
         [Route("/coupon")]
         public async Task<ActionResult<Coupon>> CreateCoupon([FromBody][Required] Coupon body)
         {
-            if (body == null || body.CustomerId == 0 || body.ExpirationDate == DateTime.MinValue) { return BadRequest(); }
+            if (await IsValidCoupon(body)) 
+            {
+                var newCoupon = new Coupon { CustomerId = body.CustomerId, ExpirationDate = body.ExpirationDate, Amount = body.Amount };
 
-            var newCoupon = new Coupon { CustomerId = body.CustomerId, ExpirationDate = body.ExpirationDate, Amount = body.Amount };
+                var response = await _couponService.CreateCoupon(newCoupon);
 
-            var response = await _couponService.CreateCoupon(newCoupon);
+                if (response == null) { return BadRequest(); }
+                return Ok(response);
+            }
 
-            if (response == null) { return BadRequest(); }
-            return Ok(response);
+            return BadRequest("Given object is not valid");
         }
 
         /// <summary>
@@ -81,6 +87,19 @@ namespace PositronAPI.Controllers
             if (response.Count == 0) { return NoContent(); }
 
             return Ok(response);
+        }
+
+        public async Task<bool> IsValidCoupon(Coupon coupon)
+        {
+            if (coupon == null ||
+               coupon.CustomerId == 0 ||
+               coupon.ExpirationDate == DateTime.MinValue) { return false; }
+
+            var customer = await _customerService.GetCustomer(coupon.CustomerId);
+
+            if(customer == null) { return false; }
+
+            return true;
         }
     }
 }

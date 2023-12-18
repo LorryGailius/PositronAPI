@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using PositronAPI.Models.Item;
 using PositronAPI.Services.ItemService;
 using System.ComponentModel.DataAnnotations;
@@ -23,7 +24,10 @@ namespace PositronAPI.Controllers
         [Route("/item")]
         public async Task<ActionResult<Item>> CreateItem([FromBody] Item body)
         {
-            if(body == null) { return BadRequest(); }
+            if(IsValidItem(body))
+            {
+
+            }
             var response = await _itemService.CreateItem(body);
             if(response == null) { return BadRequest(); }
             else { return Ok(response); }
@@ -92,6 +96,16 @@ namespace PositronAPI.Controllers
             if (response.Count == 0) { return NoContent(); }
 
             return Ok(response);
+        }
+
+        public bool IsValidItem(Item item)
+        {
+            if (item == null ||
+               String.IsNullOrEmpty(item.Name) ||
+               item.Stock < 0 ||
+               item.Price < 0) { return false; }
+
+            return true;
         }
     }
 }

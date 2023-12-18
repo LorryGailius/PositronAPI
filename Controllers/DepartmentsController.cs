@@ -2,6 +2,7 @@
 using PositronAPI.Models.Department;
 using PositronAPI.Services.CustomerService;
 using PositronAPI.Services.DepartmentService;
+using PositronAPI.Services.EmployeeService;
 using System.ComponentModel.DataAnnotations;
 
 namespace PositronAPI.Controllers
@@ -9,21 +10,27 @@ namespace PositronAPI.Controllers
     public class DepartmentsController : ControllerBase
     {
         private readonly DepartmentService _departmentService;
+        private readonly EmployeeService _employeeService;
 
-        public DepartmentsController(DepartmentService departmentService)
+        public DepartmentsController(DepartmentService departmentService, EmployeeService employeeService)
         {
             _departmentService = departmentService;
+            _employeeService = employeeService;
         }
 
         [HttpPost]
         [Route("/department")]
         public async Task<ActionResult<Department>> CreateDepartment([FromBody] Department body)
         {
-            if (body == null) { return BadRequest(); }
-            var response = await _departmentService.CreateDepartment(body);
+            if (await IsValidDepartment(body))
+            {
+                var response = await _departmentService.CreateDepartment(body);
 
-            if (response == null) { return BadRequest(); }
-            else { return Ok(response); }
+                if (response == null) { return BadRequest(); }
+                else { return Ok(response); }
+            }
+
+            return BadRequest("Given object is not valid");
         }
 
         [HttpDelete]
@@ -68,6 +75,15 @@ namespace PositronAPI.Controllers
             if (response == null) { return NotFound(); }
             else { return Ok(response); }
         }
-            
+
+        public async Task<bool> IsValidDepartment(Department department)
+        {
+            if (department == null ||
+               String.IsNullOrEmpty(department.Name) ||
+               department.ManagerId == 0 ||
+               await _employeeService.GetEmployee(department.ManagerId) == null) { return false; }
+
+            return true;
+        }
     }
 }
