@@ -21,7 +21,7 @@ namespace PositronAPI.Controllers
         [Route("/department")]
         public async Task<ActionResult<Department>> CreateDepartment([FromBody] Department body)
         {
-            if (await IsValidDepartment(body))
+            if (IsValidDepartment(body))
             {
                 var response = await _departmentService.CreateDepartment(body);
 
@@ -75,12 +75,11 @@ namespace PositronAPI.Controllers
             else { return Ok(response); }
         }
 
-        public async Task<bool> IsValidDepartment(Department department)
+        public bool IsValidDepartment(Department department)
         {
             if (department == null ||
                String.IsNullOrEmpty(department.Name) ||
-               department.ManagerId == 0 ||
-               await _employeeService.GetEmployee(department.ManagerId) == null) { return false; }
+               department.ManagerId == 0) { return false; }
 
             return true;
         }
