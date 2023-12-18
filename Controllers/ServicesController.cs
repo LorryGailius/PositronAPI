@@ -79,7 +79,8 @@ namespace PositronAPI.Controllers
 
         public async Task<bool> IsValidService(Service service)
         {
-            if (String.IsNullOrEmpty(service.Name) ||
+            if (service == null ||
+               String.IsNullOrEmpty(service.Name) ||
                service.Price == 0 ||
                service.Duration < TimeSpan.Zero ||
                service.Duration == TimeSpan.Zero ||

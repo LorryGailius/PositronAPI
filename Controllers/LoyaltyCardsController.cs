@@ -68,7 +68,8 @@ namespace PositronAPI.Controllers
 
         public async Task<bool> IsValidLoyaltyCard(LoyaltyCard loyaltyCard)
         {
-            if (await _customerService.GetCustomer(loyaltyCard.CustomerId) == null ||
+            if (loyaltyCard == null ||
+                await _customerService.GetCustomer(loyaltyCard.CustomerId) == null ||
                 await _loyaltyService.GetLoyaltyCardByCustomer(loyaltyCard.CustomerId) != null) { return false; }
 
             return true;
