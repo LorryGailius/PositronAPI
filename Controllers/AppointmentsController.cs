@@ -2,7 +2,6 @@
 using PositronAPI.Models.Schedule;
 using PositronAPI.Services.AppointmentService;
 using PositronAPI.Services.CustomerService;
-using PositronAPI.Services.EmployeeService;
 using PositronAPI.Services.ServicesService;
 
 namespace PositronAPI.Controllers

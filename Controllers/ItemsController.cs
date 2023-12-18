@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using PositronAPI.Models.Item;
 using PositronAPI.Services.ItemService;
 using System.ComponentModel.DataAnnotations;

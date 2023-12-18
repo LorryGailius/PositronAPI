@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PositronAPI.Context;
-using PositronAPI.Models.Item;
 using PositronAPI.Models.Order;
-using PositronAPI.Models.Schedule;
 
 namespace PositronAPI.Services.OrderService
 {

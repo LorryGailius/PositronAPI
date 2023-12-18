@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PositronAPI.Models.Department;
-using PositronAPI.Services.CustomerService;
 using PositronAPI.Services.DepartmentService;
 using PositronAPI.Services.EmployeeService;
 using System.ComponentModel.DataAnnotations;
