@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PositronAPI.Models.Coupon;
 using PositronAPI.Models.Customer;
 using PositronAPI.Models.LoyaltyCard;
 using PositronAPI.Services.CouponService;
