@@ -26,7 +26,11 @@ namespace PositronAPI.Controllers
         [Route("/coupon")]
         public async Task<ActionResult<Coupon>> CreateCoupon([FromBody][Required] Coupon body)
         {
-            var response = await _couponService.CreateCoupon(body);
+            if (body == null || body.CustomerId == 0 || body.ExpirationDate == DateTime.MinValue) { return BadRequest(); }
+
+            var newCoupon = new Coupon { CustomerId = body.CustomerId, ExpirationDate = body.ExpirationDate, Amount = body.Amount };
+
+            var response = await _couponService.CreateCoupon(newCoupon);
 
             if (response == null) { return BadRequest(); }
             return Ok(response);

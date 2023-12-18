@@ -30,8 +30,11 @@ namespace PositronAPI.Controllers
         [Route("/customer")]
         public async Task<ActionResult<Customer>> CreateCustomer([FromBody] Customer body)
         {
-            if (body == null) { return BadRequest(); }
-            var response = await _customerService.CreateCustomer(body);
+            if (body == null || String.IsNullOrEmpty(body.Name)) { return BadRequest(); }
+
+            var newCustomer = new Customer { Name = body.Name, Email = body.Email };
+
+            var response = await _customerService.CreateCustomer(newCustomer);
 
             if (response == null) { return BadRequest(); }
             else { return Ok(response); }
