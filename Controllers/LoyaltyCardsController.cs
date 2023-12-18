@@ -2,16 +2,19 @@
 using PositronAPI.Models.LoyaltyCard;
 using System.ComponentModel.DataAnnotations;
 using PositronAPI.Services.LoyaltyService;
+using PositronAPI.Services.CustomerService;
 
 namespace PositronAPI.Controllers
 {
     public class LoyaltyCardsController : ControllerBase
     {
         private readonly LoyaltyService _loyaltyService;
+        private readonly CustomerService _customerService;
 
-        public LoyaltyCardsController(LoyaltyService loyaltyService)
+        public LoyaltyCardsController(LoyaltyService loyaltyService, CustomerService customerService)
         {
             _loyaltyService = loyaltyService;
+            _customerService = customerService;
         }
 
         // Loyalty Card Endpoints
@@ -56,6 +59,13 @@ namespace PositronAPI.Controllers
         public async Task<ActionResult<LoyaltyCard>> GetLoyaltyCard([FromRoute][Required] long customerId)
         {
             return await _loyaltyService.GetLoyaltyCard(customerId);
+        }
+
+        public async Task<bool> IsValidLoyaltyCard(LoyaltyCard loyaltyCard)
+        {
+            if (await _customerService.GetCustomer(loyaltyCard.CustomerId) == null) { return false; }
+
+            return true;
         }
     }
 }
