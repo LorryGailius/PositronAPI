@@ -74,7 +74,7 @@ namespace PositronAPI.Controllers
         {
             var response = await _couponService.GetCoupons(customerId);
 
-            if (!response.Any()) { return NoContent(); }
+            if (response.Count == 0) { return NoContent(); }
 
             return Ok(response);
         }
