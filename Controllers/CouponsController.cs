@@ -36,7 +36,7 @@ namespace PositronAPI.Controllers
                 var response = await _couponService.CreateCoupon(newCoupon);
 
                 if (response == null) { return BadRequest(); }
-                return Ok(response);
+                else { return Ok(response); }
             }
 
             return BadRequest("Given object is not valid");

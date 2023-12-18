@@ -25,8 +25,9 @@ namespace PositronAPI.Controllers
         public async Task<ActionResult<Appointment>> CreateAppointment([FromBody] Appointment body)
         {
             if (await IsValidAppointment(body))
-            {
+            {                
                 var respone = await _appointmentService.CreateAppointment(body);
+
                 if (respone == null) { return BadRequest(); }
                 else { return Ok(respone); }
             }
