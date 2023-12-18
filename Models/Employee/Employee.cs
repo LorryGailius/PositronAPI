@@ -39,7 +39,7 @@ namespace PositronAPI.Models.Employee
         /// </summary>
 
         [DataMember(Name = "wage")]
-        public decimal? Wage { get; set; }
+        public decimal Wage { get; set; }
 
         /// <summary>
         /// Gets or Sets DepartmentId
