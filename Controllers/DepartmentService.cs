@@ -60,12 +60,14 @@ namespace PositronAPI.Controllers
         [Route("/department")]
         public async Task<ActionResult<List<Department>>> GetDepartments([FromQuery] int top, [FromQuery] int skip)
         {
-            if (top < 0 || skip < 0) { return BadRequest(); }
+        //    if (top < 0 || skip < 0) { return BadRequest(); }
 
-            var response = (top > 0 || skip > 0) ? await _departmentService.GetDepartments(top, skip) : await _departmentService.GetDepartments();
+        //    var response = (top > 0 || skip > 0) ? await _departmentService.GetDepartments(top, skip) : await _departmentService.GetDepartments();
 
-            if (response == null) { return NotFound(); }
-            else { return Ok(response); }
+        //    if (response == null) { return NotFound(); }
+        //    else { return Ok(response); }
+
+            return Ok();
         }
             
     }
