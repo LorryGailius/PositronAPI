@@ -7,6 +7,13 @@ namespace PositronAPI.Models.Employee
     public class Employee
     {
         /// <summary>
+        /// Gets or Sets Id
+        /// </summary>
+
+        [DataMember(Name = "id")]
+        public long Id { get; set; }
+
+        /// <summary>
         /// Gets or Sets Name
         /// </summary>
 
@@ -35,11 +42,10 @@ namespace PositronAPI.Models.Employee
         public decimal? Wage { get; set; }
 
         /// <summary>
-        /// Gets or Sets Id
+        /// Gets or Sets DepartmentId
         /// </summary>
-
-        [DataMember(Name = "id")]
-        public long Id { get; set; }
+        [DataMember(Name = "departmentId")]
+        public long DepartmentId { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
