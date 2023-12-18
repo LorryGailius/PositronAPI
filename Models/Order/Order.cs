@@ -11,13 +11,13 @@ namespace PositronAPI.Models.Order
         public long Id { get; set; }
 
         [DataMember(Name = "customerId")]
-        public long CustomerId { get; set; }
+        public long? CustomerId { get; set; }
 
         [DataMember(Name = "status")]
-        public OrderStatus Status { get; set; }
+        public OrderStatus Status { get; set; } = OrderStatus.Pending;
 
         [DataMember(Name = "total")]
-        public decimal Total { get; set; }
+        public decimal Total { get; set; } = 0.0M;
 
         [DataMember(Name = "taxCode")]
         public TaxCode TaxCode { get; set; }
@@ -73,28 +73,23 @@ namespace PositronAPI.Models.Order
 
             return
                 (
-                    Id == other.Id ||
-                    Id != null &&
+                    Id == other.Id &&
                     Id.Equals(other.Id)
                 ) &&
                 (
-                    CustomerId == other.CustomerId ||
-                    CustomerId != null &&
+                    CustomerId == other.CustomerId&&
                     CustomerId.Equals(other.CustomerId)
                 ) &&
                 (
-                    Status == other.Status ||
-                    Status != null &&
+                    Status == other.Status &&
                     Status.Equals(other.Status)
                 ) &&
                 (
-                    Total == other.Total ||
-                    Total != null &&
+                    Total == other.Total &&
                     Total.Equals(other.Total)
                 ) &&
                 (
-                    TaxCode == other.TaxCode ||
-                    TaxCode != null &&
+                    TaxCode == other.TaxCode &&
                     TaxCode.Equals(other.TaxCode)
                 );
         }

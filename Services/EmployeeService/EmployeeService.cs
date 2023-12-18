@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PositronAPI.Context;
 using PositronAPI.Models.Employee;
 
-namespace PositronAPI.Services
+namespace PositronAPI.Services.EmployeeService
 {
     public class EmployeeService
     {
@@ -16,18 +16,9 @@ namespace PositronAPI.Services
 
         public async Task<Employee> CreateEmployee(Employee employee)
         {
-            Employee newEmployee = new()
-            {
-                Name = employee.Name,
-                Surname = employee.Surname,
-                Role = employee.Role,
-                Wage = employee.Wage,
-
-            };
-
-            _context.Employees.Add(newEmployee);
+            _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
-            return newEmployee;
+            return employee;
         }
 
         public async Task<Employee> DeleteEmployee(long employeeId)

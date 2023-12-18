@@ -109,18 +109,15 @@ namespace PositronAPI.Models.Item
                     Description.Equals(other.Description)
                 ) &&
                 (
-                    Price == other.Price ||
-                    Price != null &&
+                    Price == other.Price &&
                     Price.Equals(other.Price)
                 ) &&
                 (
-                    Stock == other.Stock ||
-                    Stock != null &&
+                    Stock == other.Stock &&
                     Stock.Equals(other.Stock)
                 ) &&
                 (
-                    Id == other.Id ||
-                    Id != null &&
+                    Id == other.Id &&
                     Id.Equals(other.Id)
                 );
         }

@@ -2,7 +2,7 @@
 using PositronAPI.Context;
 using PositronAPI.Models.Item;
 
-namespace PositronAPI.Services
+namespace PositronAPI.Services.ItemService
 {
     public class ItemService
     {

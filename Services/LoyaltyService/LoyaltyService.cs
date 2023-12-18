@@ -1,7 +1,7 @@
 ﻿using PositronAPI.Context;
 using PositronAPI.Models.LoyaltyCard;
 
-namespace PositronAPI.Services
+namespace PositronAPI.Services.LoyaltyService
 {
     public class LoyaltyService
     {
@@ -20,7 +20,7 @@ namespace PositronAPI.Services
             {
                 return null;
             }
-      
+
             _context.LoyaltyCards.Add(loyaltyCard);
             await _context.SaveChangesAsync();
             return loyaltyCard;
@@ -41,9 +41,9 @@ namespace PositronAPI.Services
         }
 
         // Get a loyalty card
-        public async Task<LoyaltyCard> GetLoyaltyCard(long customerId)
+        public async Task<LoyaltyCard> GetLoyaltyCard(long loyaltyCardId)
         {
-            return await _context.LoyaltyCards.FindAsync(customerId);
+            return await _context.LoyaltyCards.FindAsync(loyaltyCardId);
         }
 
 

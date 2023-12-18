@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PositronAPI.Models.Item;
-using PositronAPI.Services;
+using PositronAPI.Services.ItemService;
 using System.ComponentModel.DataAnnotations;
 
 namespace PositronAPI.Controllers
@@ -89,7 +89,7 @@ namespace PositronAPI.Controllers
 
             var response = (top > 0 || skip > 0) ? await _itemService.GetItems(categoryId, top, skip) : await _itemService.GetItems(categoryId);
 
-            if (!response.Any()) { return NoContent(); }
+            if (response.Count == 0) { return NoContent(); }
 
             return Ok(response);
         }

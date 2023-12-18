@@ -73,20 +73,16 @@ namespace PositronAPI.Models.LoyaltyCard
             if (ReferenceEquals(this, other)) return true;
 
             return
-
                 (
-                    Id == other.Id ||
-                    Id != null &&
+                    Id == other.Id &&
                     Id.Equals(other.Id)
                 ) &&
                 (
-                    CustomerId == other.CustomerId ||
-                    CustomerId != null &&
+                    CustomerId == other.CustomerId &&
                     CustomerId.Equals(other.CustomerId)
                 ) &&
                 (
-                    Balance == other.Balance ||
-                    Balance != null &&
+                    Balance == other.Balance &&
                     Balance.Equals(other.Balance)
                 );
         }

@@ -2,7 +2,9 @@
 using PositronAPI.Models.Coupon;
 using PositronAPI.Models.Customer;
 using PositronAPI.Models.LoyaltyCard;
-using PositronAPI.Services;
+using PositronAPI.Services.CouponService;
+using PositronAPI.Services.CustomerService;
+using PositronAPI.Services.LoyaltyService;
 using System.ComponentModel.DataAnnotations;
 
 namespace PositronAPI.Controllers
@@ -99,7 +101,7 @@ namespace PositronAPI.Controllers
 
             var response = (top > 0 || skip > 0) ? await _customerService.GetCustomers(top, skip) : await _customerService.GetCustomers();
 
-            if (!response.Any()) { return NoContent(); }
+            if (response.Count == 0) { return NoContent(); }
 
             return Ok(response);
         }
@@ -209,7 +211,7 @@ namespace PositronAPI.Controllers
         {   
             var response = await _couponService.GetCoupons(customerId);
 
-            if (!response.Any()) { return NoContent(); }
+            if (response.Count == 0) { return NoContent(); }
 
             return Ok(response);
         }

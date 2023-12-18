@@ -2,7 +2,7 @@
 using PositronAPI.Context;
 using PositronAPI.Models.Coupon;
 
-namespace PositronAPI.Services
+namespace PositronAPI.Services.CouponService
 {
     public class CouponService
     {
@@ -41,7 +41,7 @@ namespace PositronAPI.Services
             return await _context.Coupons.FindAsync(couponId);
         }
 
-        // Get all coupons
+        // Get all coupons for a customer
         public async Task<List<Coupon>> GetCoupons(long customerId)
         {
             return await _context.Coupons.Where(c => c.CustomerId == customerId).ToListAsync();
