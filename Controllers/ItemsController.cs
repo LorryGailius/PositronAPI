@@ -24,13 +24,15 @@ namespace PositronAPI.Controllers
         [Route("/item")]
         public async Task<ActionResult<Item>> CreateItem([FromBody] Item body)
         {
-            if(IsValidItem(body))
+            if (IsValidItem(body))
             {
+                var response = await _itemService.CreateItem(body);
 
+                if (response == null) { return BadRequest(); }
+                else { return Ok(response); }
             }
-            var response = await _itemService.CreateItem(body);
-            if(response == null) { return BadRequest(); }
-            else { return Ok(response); }
+
+            return BadRequest("Given object is not valid");
         }
 
         /// <summary>
