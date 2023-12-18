@@ -28,10 +28,15 @@ namespace PositronAPI.Controllers
         [Route("/loyaltyCard")]
         public async Task<ActionResult> CreateLoyaltyCard([FromBody][Required] LoyaltyCard body)
         {
-            var response = await _loyaltyService.CreateLoyaltyCard(body);
+            if (await IsValidLoyaltyCard(body))
+            {
+                var response = await _loyaltyService.CreateLoyaltyCard(body);
 
-            if (response == null) { return BadRequest(); }
-            return Ok(response);
+                if (response == null) { return BadRequest(); }
+                else { return Ok(response); }
+            }
+
+            return BadRequest("Given object is not valid");
         }
 
         /// <summary>
@@ -63,7 +68,8 @@ namespace PositronAPI.Controllers
 
         public async Task<bool> IsValidLoyaltyCard(LoyaltyCard loyaltyCard)
         {
-            if (await _customerService.GetCustomer(loyaltyCard.CustomerId) == null) { return false; }
+            if (await _customerService.GetCustomer(loyaltyCard.CustomerId) == null ||
+                await _loyaltyService.GetLoyaltyCardByCustomer(loyaltyCard.CustomerId) != null) { return false; }
 
             return true;
         }
