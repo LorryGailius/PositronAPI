@@ -1,15 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PositronAPI.Models.Department;
 using PositronAPI.Services.CustomerService;
+using PositronAPI.Services.DepartmentService;
 using System.ComponentModel.DataAnnotations;
 
 namespace PositronAPI.Controllers
 {
-    public class DepartmentService : ControllerBase
+    public class DepartmentsController : ControllerBase
     {
         private readonly DepartmentService _departmentService;
 
-        public DepartmentService(DepartmentService departmentService)
+        public DepartmentsController(DepartmentService departmentService)
         {
             _departmentService = departmentService;
         }
@@ -60,14 +61,12 @@ namespace PositronAPI.Controllers
         [Route("/department")]
         public async Task<ActionResult<List<Department>>> GetDepartments([FromQuery] int top, [FromQuery] int skip)
         {
-        //    if (top < 0 || skip < 0) { return BadRequest(); }
+            if (top < 0 || skip < 0) { return BadRequest(); }
 
-        //    var response = (top > 0 || skip > 0) ? await _departmentService.GetDepartments(top, skip) : await _departmentService.GetDepartments();
+            var response = (top > 0 || skip > 0) ? await _departmentService.GetDepartments(top, skip) : await _departmentService.GetDepartments();
 
-        //    if (response == null) { return NotFound(); }
-        //    else { return Ok(response); }
-
-            return Ok();
+            if (response == null) { return NotFound(); }
+            else { return Ok(response); }
         }
             
     }
