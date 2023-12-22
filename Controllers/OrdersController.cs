@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PositronAPI.Models.Order;
+using PositronAPI.Models.Item;
 using PositronAPI.Services.CustomerService;
 using PositronAPI.Services.OrderService;
+using PositronAPI.Services.ItemService;
 using System.ComponentModel.DataAnnotations;
 
 namespace PositronAPI.Controllers
@@ -10,11 +12,13 @@ namespace PositronAPI.Controllers
     {
         private readonly OrderService _orderService;
         private readonly CustomerService _customerService;
+        private readonly ItemService _itemService;
 
-        public OrdersController(OrderService orderService, CustomerService customerService)
+        public OrdersController(OrderService orderService, CustomerService customerService, ItemService itemService)
         {
             _orderService = orderService;
             _customerService = customerService;
+            _itemService = itemService;
         }
 
         /// <summary>
@@ -40,9 +44,27 @@ namespace PositronAPI.Controllers
             return BadRequest("Given object is not valid");
         }
 
-        // AddItemToOrder(ItemOrder itemOrder)
+        [HttpPost]
+        [Route("/order/{orderId}/additem/{itemId}/{quantity}")]
+        public async Task<ActionResult> AddItemToOrder([FromRoute][Required] long orderId,
+                                                       [FromRoute][Required] long itemId, [FromRoute][Required] int quantity)
+        {
+            var responseOrder = await _orderService.GetOrder(orderId);
+            var responseItem = await _itemService.GetItem(itemId);
 
-        // AddServiceToOrderr(ServiceOrder serviceOrder)
+            if (responseOrder == null || responseItem == null) { return NotFound(); }
+
+            decimal subtotal = quantity * responseItem.Price;
+
+            ItemOrder itemOrder = new ItemOrder { OrderId = orderId, ItemId = itemId, Quantity = quantity, Subtotal = subtotal};
+
+            var response = _orderService.AddItemToOrder(itemOrder);
+
+            if (response == null) { return BadRequest(); }
+            else { return Created(String.Empty, response); }
+        }
+
+        // AddServiceToOrder(ServiceOrder serviceOrder)
 
         // GetOrder(long orderId)
 
