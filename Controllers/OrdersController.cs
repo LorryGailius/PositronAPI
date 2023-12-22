@@ -1,10 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PositronAPI.Models.Order;
 using PositronAPI.Models.Item;
+using PositronAPI.Models.Schedule;
 using PositronAPI.Services.CustomerService;
 using PositronAPI.Services.OrderService;
 using PositronAPI.Services.ItemService;
+using PositronAPI.Services.ServicesService;
 using System.ComponentModel.DataAnnotations;
+using PositronAPI.Models.Coupon;
+using PositronAPI.Services.CouponService;
+using PositronAPI.Services.AppointmentService;
 
 namespace PositronAPI.Controllers
 {
@@ -13,12 +18,14 @@ namespace PositronAPI.Controllers
         private readonly OrderService _orderService;
         private readonly CustomerService _customerService;
         private readonly ItemService _itemService;
+        private readonly ServicesService _servicesService;
 
-        public OrdersController(OrderService orderService, CustomerService customerService, ItemService itemService)
+        public OrdersController(OrderService orderService, CustomerService customerService, ItemService itemService, ServicesService servicesService)
         {
             _orderService = orderService;
             _customerService = customerService;
             _itemService = itemService;
+            _servicesService = servicesService;
         }
 
         /// <summary>
@@ -64,15 +71,69 @@ namespace PositronAPI.Controllers
             else { return Created(String.Empty, response); }
         }
 
-        // AddServiceToOrder(ServiceOrder serviceOrder)
 
-        // GetOrder(long orderId)
+        [HttpPost]
+        [Route("/order/{orderId}/addservice/{serviceId}/{quantity}")]
+        public async Task<ActionResult> AddServiceToOrder([FromRoute][Required] long orderId,
+                                                       [FromRoute][Required] long serviceId, [FromRoute][Required] int quantity)
+        {
+            var responseOrder = await _orderService.GetOrder(orderId);
+            var responseService = await _servicesService.GetService(serviceId);
 
-        // GetOrderItems(long orderId)
+            if (responseOrder == null || responseService == null) { return NotFound(); }
 
-        // GetOrderServices(long orderId)
+            decimal subtotal = _orderService.Subtotal(responseService.Price, quantity);
 
-        // EditOrder(Order order, long orderId)
+            ServiceOrder serviceOrder = new ServiceOrder { OrderId = orderId, ServiceId = serviceId, Quantity = quantity, Subtotal = subtotal };
+
+            var response = _orderService.AddServiceToOrder(serviceOrder);
+
+            if (response == null) { return BadRequest(); }
+            else { return Created(String.Empty, response); }
+        }
+
+
+        [HttpGet]
+        [Route("/order/{orderId}")]
+        public async Task<ActionResult<Order>> GetOrder([FromRoute][Required] long orderId)
+        {
+            var response = await _orderService.GetOrder(orderId);
+
+            if (response == null) { return NotFound(); }
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("/order/{orderId}/getitems")]
+        public async Task<ActionResult<List<ItemOrder>>> GetOrderItems([FromRoute][Required] long orderId)
+        {
+            var response = await _orderService.GetOrderItems(orderId);
+
+            if (response == null) { return NotFound(); }
+            return Ok(response);
+        }
+
+
+        [HttpGet]
+        [Route("/order/{orderId}/getservices")]
+        public async Task<ActionResult<List<ServiceOrder>>> GetOrderServices([FromRoute][Required] long orderId)
+        {
+            var response = await _orderService.GetOrderServices(orderId);
+
+            if (response == null) { return NotFound(); }
+            return Ok(response);
+        }
+
+        [HttpPut]
+        [Route("/order/{orderId}")]
+        public async Task<ActionResult<Order>> EditOrder([FromBody] Order body, [FromRoute][Required] long orderId)
+        {
+            if (body == null) { return BadRequest(); }
+            var response = await _orderService.EditOrder(body, orderId);
+
+            if (response == null) { return BadRequest(); }
+            else { return Ok(response); }
+        }
 
         public async Task<bool> IsValidOrder(Order order)
         {
