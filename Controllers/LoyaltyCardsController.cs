@@ -30,7 +30,9 @@ namespace PositronAPI.Controllers
         {
             if (await IsValidLoyaltyCard(body))
             {
-                var response = await _loyaltyService.CreateLoyaltyCard(body);
+                var newLoyaltyCard = new LoyaltyCard { CustomerId = body.CustomerId, Balance = body.Balance };
+
+                var response = await _loyaltyService.CreateLoyaltyCard(newLoyaltyCard);
 
                 if (response == null) { return BadRequest(); }
                 else { return Ok(response); }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PositronAPI.Models.Employee;
 using PositronAPI.Models.Schedule;
 using PositronAPI.Services.EmployeeService;
 using PositronAPI.Services.ServicesService;
@@ -24,7 +25,10 @@ namespace PositronAPI.Controllers
         {
             if (await IsValidService(body))
             {
-                var response = await _servicesService.CreateService(body);
+                var newService = new Service { EmployeeId = body.EmployeeId, Name = body.Name, Description = body.Description,
+                                                Duration = body.Duration, Price = body.Price, Category = body.Category};
+
+                var response = await _servicesService.CreateService(newService);
 
                 if (response == null) { return BadRequest(); }
                 else { return Ok(response); }

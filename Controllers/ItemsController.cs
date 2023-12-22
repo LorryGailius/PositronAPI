@@ -25,7 +25,10 @@ namespace PositronAPI.Controllers
         {
             if (IsValidItem(body))
             {
-                var response = await _itemService.CreateItem(body);
+                var newItem = new Item { Name = body.Name, Category = body.Category,
+                                        Description = body.Description, Price = body.Price , Stock = body.Stock};
+
+                var response = await _itemService.CreateItem(newItem);
 
                 if (response == null) { return BadRequest(); }
                 else { return Ok(response); }

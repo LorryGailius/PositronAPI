@@ -23,7 +23,9 @@ namespace PositronAPI.Controllers
         {
             if (IsValidDepartment(body))
             {
-                var response = await _departmentService.CreateDepartment(body);
+                var newDepartment = new Department { ManagerId = body.ManagerId, Name = body.Name};
+
+                var response = await _departmentService.CreateDepartment(newDepartment);
 
                 if (response == null) { return BadRequest(); }
                 else { return Ok(response); }

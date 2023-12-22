@@ -23,7 +23,9 @@ namespace PositronAPI.Controllers
         {
             if (await IsValidEmployee(body))
             {
-                var response = await _employeeService.CreateEmployee(body);
+                var newEmployee = new Employee { Name = body.Name, Surname = body.Surname, Role = body.Role, Wage = body.Wage, DepartmentId = body.DepartmentId };
+                
+                var response = await _employeeService.CreateEmployee(newEmployee);
 
                 if (response == null) { return BadRequest(); }
                 else { return Ok(response); }
