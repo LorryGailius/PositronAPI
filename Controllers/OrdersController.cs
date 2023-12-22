@@ -54,7 +54,7 @@ namespace PositronAPI.Controllers
 
             if (responseOrder == null || responseItem == null) { return NotFound(); }
 
-            decimal subtotal = quantity * responseItem.Price;
+            decimal subtotal = _orderService.Subtotal(responseItem.Price, quantity);
 
             ItemOrder itemOrder = new ItemOrder { OrderId = orderId, ItemId = itemId, Quantity = quantity, Subtotal = subtotal};
 

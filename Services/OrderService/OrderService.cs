@@ -73,5 +73,10 @@ namespace PositronAPI.Services.OrderService
 
             return existingOrder;
         }
+
+        public decimal Subtotal(decimal price, int quantity)
+        {
+            return price * quantity;
+        }
     }
 }
