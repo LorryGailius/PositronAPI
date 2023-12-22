@@ -15,7 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add our services
-builder.Services.AddScoped<CustomerService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<LoyaltyService>();
 builder.Services.AddScoped<CouponService>();
 builder.Services.AddScoped<ItemService>();
