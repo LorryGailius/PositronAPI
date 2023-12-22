@@ -27,10 +27,10 @@ namespace PositronAPI.Controllers
             {                
                 var newAppointment = new Appointment { CustomerId = body.CustomerId, ServiceId = body.ServiceId, Date = body.Date };
                 
-                var respone = await _appointmentService.CreateAppointment(newAppointment);
+                var response = await _appointmentService.CreateAppointment(newAppointment);
 
-                if (respone == null) { return BadRequest(); }
-                else { return Ok(respone); }
+                if (response == null) { return BadRequest(); }
+                else { return Created(String.Empty, response); }
             }
 
             return BadRequest("Given object is not valid");

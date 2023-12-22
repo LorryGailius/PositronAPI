@@ -32,7 +32,7 @@ namespace PositronAPI.Controllers
                 var response = await _customerService.CreateCustomer(newCustomer);
 
                 if (response == null) { return BadRequest(); }
-                else { return Ok(response); }
+                else { return Created(String.Empty, response); }
             }
 
             return BadRequest("Given object is not valid");

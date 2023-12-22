@@ -35,7 +35,7 @@ namespace PositronAPI.Controllers
                 var response = await _loyaltyService.CreateLoyaltyCard(newLoyaltyCard);
 
                 if (response == null) { return BadRequest(); }
-                else { return Ok(response); }
+                else { return Created(String.Empty, response); }
             }
 
             return BadRequest("Given object is not valid");
