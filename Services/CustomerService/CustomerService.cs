@@ -4,7 +4,7 @@ using PositronAPI.Models.Customer;
 
 namespace PositronAPI.Services.CustomerService
 {
-    public class CustomerService
+    public class CustomerService : ICustomerService
     {
         private readonly AppDbContext _context;
 
