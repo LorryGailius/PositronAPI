@@ -80,8 +80,7 @@ namespace PositronAPI.Controllers
         public bool IsValidDepartment(Department department)
         {
             if (department == null ||
-               String.IsNullOrEmpty(department.Name) ||
-               department.ManagerId == 0) { return false; }
+               String.IsNullOrEmpty(department.Name)) { return false; }
 
             return true;
         }
