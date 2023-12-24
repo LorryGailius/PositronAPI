@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using PositronAPI.Models.Coupon;
 using PositronAPI.Services.CouponService;
 using PositronAPI.Services.AppointmentService;
+using System.Reflection.Metadata.Ecma335;
 
 namespace PositronAPI.Controllers
 {
@@ -56,10 +57,8 @@ namespace PositronAPI.Controllers
         public async Task<ActionResult> AddItemToOrder([FromRoute][Required] long orderId,
                                                        [FromRoute][Required] long itemId, [FromRoute][Required] int quantity)
         {
-            var responseOrder = await _orderService.GetOrder(orderId);
-            var responseItem = await _itemService.GetItem(itemId);
-
-            if (responseOrder == null || responseItem == null) { return NotFound(); }
+            Item responseItem = await IsValidItemOrder(orderId, itemId);
+            if (responseItem is null) { return NotFound(); }
 
             decimal subtotal = _orderService.Subtotal(responseItem.Price, quantity);
 
@@ -71,16 +70,31 @@ namespace PositronAPI.Controllers
             else { return Created(String.Empty, response); }
         }
 
+        /// <summary>
+        /// Check whether a new item can be added to order
+        /// </summary>
+        /// <remarks>Check for validity</remarks>
+        /// <param name="orderId">long orderId</param>
+        /// <param name="itemId">long itemId</param>
+        /// <returns>responseItem if valid, null if not valid</returns>
+        private async Task<Item> IsValidItemOrder(long orderId, long itemId)
+        {
+            var responseOrder = await _orderService.GetOrder(orderId);
+            var responseItem = await _itemService.GetItem(itemId);
+
+            if (responseOrder == null || responseItem == null) { return null; }
+
+            return responseItem;
+        }
+
 
         [HttpPost]
         [Route("/order/{orderId}/addservice/{serviceId}/{quantity}")]
         public async Task<ActionResult> AddServiceToOrder([FromRoute][Required] long orderId,
                                                        [FromRoute][Required] long serviceId, [FromRoute][Required] int quantity)
         {
-            var responseOrder = await _orderService.GetOrder(orderId);
-            var responseService = await _servicesService.GetService(serviceId);
-
-            if (responseOrder == null || responseService == null) { return NotFound(); }
+            Service responseService = await IsValidServiceOrder(orderId, serviceId);
+            if (responseService is null) { return NotFound(); }
 
             decimal subtotal = _orderService.Subtotal(responseService.Price, quantity);
 
@@ -90,6 +104,23 @@ namespace PositronAPI.Controllers
 
             if (response == null) { return BadRequest(); }
             else { return Created(String.Empty, response); }
+        }
+
+        /// <summary>
+        /// Check whether a new service can be added to order
+        /// </summary>
+        /// <remarks>Check for validity</remarks>
+        /// <param name="orderId">long orderId</param>
+        /// <param name="serviceId">long serviceId</param>
+        /// <returns>responseService if valid, null if not valid</returns>
+        private async Task<Service> IsValidServiceOrder(long orderId, long serviceId)
+        {
+            var responseOrder = await _orderService.GetOrder(orderId);
+            var responseService = await _servicesService.GetService(serviceId);
+
+            if (responseOrder == null || responseService == null) { return null; }
+
+            return responseService;
         }
 
 
