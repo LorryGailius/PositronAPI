@@ -4,7 +4,7 @@ using PositronAPI.Models.Item;
 
 namespace PositronAPI.Services.ItemService
 {
-    public class ItemService
+    public class ItemService : IItemService
     {
         private readonly AppDbContext _context;
 
