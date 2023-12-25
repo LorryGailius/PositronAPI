@@ -5,7 +5,7 @@ using PositronAPI.Models.Employee;
 
 namespace PositronAPI.Services.EmployeeService
 {
-    public class EmployeeService
+    public class EmployeeService : IEmployeeService
     {
         private readonly AppDbContext _context;
 
