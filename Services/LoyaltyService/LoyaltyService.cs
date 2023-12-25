@@ -3,7 +3,7 @@ using PositronAPI.Models.LoyaltyCard;
 
 namespace PositronAPI.Services.LoyaltyService
 {
-    public class LoyaltyService
+    public class LoyaltyService : ILoyaltyService
     {
         private readonly AppDbContext _context;
 

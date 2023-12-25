@@ -16,7 +16,7 @@ builder.Services.AddSwaggerGen();
 
 // Add our services
 builder.Services.AddScoped<ICustomerService, CustomerService>();
-builder.Services.AddScoped<LoyaltyService>();
+builder.Services.AddScoped<ILoyaltyService, LoyaltyService>();
 builder.Services.AddScoped<ICouponService, CouponService>();
 builder.Services.AddScoped<ItemService>();
 
