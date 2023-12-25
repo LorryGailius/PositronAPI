@@ -11,11 +11,11 @@ namespace PositronAPI.Controllers
 {
     public class CustomersController : ControllerBase
     {
-        private readonly CustomerService _customerService;
-        private readonly LoyaltyService _loyaltyService;
-        private readonly CouponService _couponService;
+        private readonly ICustomerService _customerService;
+        private readonly ILoyaltyService _loyaltyService;
+        private readonly ICouponService _couponService;
 
-        public CustomersController(CustomerService customerService, LoyaltyService loyaltyService, CouponService couponService)
+        public CustomersController(ICustomerService customerService, ILoyaltyService loyaltyService, ICouponService couponService)
         {
             _customerService = customerService;
             _loyaltyService = loyaltyService;
