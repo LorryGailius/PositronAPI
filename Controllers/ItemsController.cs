@@ -23,10 +23,18 @@ namespace PositronAPI.Controllers
         [Route("/item")]
         public async Task<ActionResult<Item>> CreateItem([FromBody] Item body)
         {
-            if(body == null) { return BadRequest(); }
-            var response = await _itemService.CreateItem(body);
-            if(response == null) { return BadRequest(); }
-            else { return Ok(response); }
+            if (IsValidItem(body))
+            {
+                var newItem = new Item { Name = body.Name, Category = body.Category,
+                                        Description = body.Description, Price = body.Price , Stock = body.Stock};
+
+                var response = await _itemService.CreateItem(newItem);
+
+                if (response == null) { return BadRequest(); }
+                else { return Created(String.Empty, response); }
+            }
+
+            return BadRequest("Given object is not valid");
         }
 
         /// <summary>
@@ -92,6 +100,16 @@ namespace PositronAPI.Controllers
             if (response.Count == 0) { return NoContent(); }
 
             return Ok(response);
+        }
+
+        public bool IsValidItem(Item item)
+        {
+            if (item == null ||
+               String.IsNullOrEmpty(item.Name) ||
+               item.Stock < 0 ||
+               item.Price < 0) { return false; }
+
+            return true;
         }
     }
 }
