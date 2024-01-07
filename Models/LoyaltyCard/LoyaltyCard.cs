@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
 
@@ -24,6 +25,7 @@ namespace PositronAPI.Models.LoyaltyCard
         /// </summary>
 
         [DataMember(Name = "balance")]
+        [Range(0, double.MaxValue)]
         public decimal Balance { get; set; } = 0.0M;
 
         /// <summary>

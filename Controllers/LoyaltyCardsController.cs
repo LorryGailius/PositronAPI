@@ -45,12 +45,12 @@ namespace PositronAPI.Controllers
         /// Remove a loyalty card
         /// </summary>
         /// <remarks>Deletes a loyalty card.</remarks>
-        /// <param name="customerId">The id of the loyalty card holder</param>
+        /// <param name="loyaltyId">The id of the loyalty card</param>
         [HttpDelete]
-        [Route("/loyaltyCard")]
-        public async Task<ActionResult> DeleteLoyaltyCard([FromRoute][Required] long customerId)
+        [Route("/loyaltyCard/{loyaltyId}")]
+        public async Task<ActionResult> DeleteLoyaltyCard([FromRoute][Required] long loyaltyId)
         {
-            var response = await _loyaltyService.DeleteLoyaltyCard(customerId);
+            var response = await _loyaltyService.DeleteLoyaltyCard(loyaltyId);
 
             if (response == null) { return NotFound(); }
             return NoContent();
@@ -60,19 +60,23 @@ namespace PositronAPI.Controllers
         /// Gets loyalty card of a customer
         /// </summary>
         /// <remarks>Gets loyalty card.</remarks>
-        /// <param name="customerId">The id of the loyalty card holder</param>
+        /// <param name="loyaltyId">The id of the loyalty card</param>
         [HttpGet]
-        [Route("/loyaltyCard")]
-        public async Task<ActionResult<LoyaltyCard>> GetLoyaltyCard([FromRoute][Required] long customerId)
+        [Route("/loyaltyCard/{loyaltyId}")]
+        public async Task<ActionResult<LoyaltyCard>> GetLoyaltyCard([FromRoute][Required] long loyaltyId)
         {
-            return await _loyaltyService.GetLoyaltyCard(customerId);
+            var response = await _loyaltyService.GetLoyaltyCard(loyaltyId);
+
+            if(response == null) { return NotFound(); }
+            return Ok(response);
         }
 
         public async Task<bool> IsValidLoyaltyCard(LoyaltyCard loyaltyCard)
         {
             if (loyaltyCard == null ||
                 await _customerService.GetCustomer(loyaltyCard.CustomerId) == null ||
-                await _loyaltyService.GetLoyaltyCardByCustomer(loyaltyCard.CustomerId) != null) { return false; }
+                await _loyaltyService.GetLoyaltyCardByCustomer(loyaltyCard.CustomerId) != null ||
+                loyaltyCard.Balance < 0) { return false; }
 
             return true;
         }
