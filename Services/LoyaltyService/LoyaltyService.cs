@@ -28,9 +28,9 @@ namespace PositronAPI.Services.LoyaltyService
         }
 
         // Remove a loyalty card
-        public async Task<LoyaltyCard> DeleteLoyaltyCard(long customerId)
+        public async Task<LoyaltyCard> DeleteLoyaltyCard(long loyaltyId)
         {
-            var loyaltyCard = await _context.LoyaltyCards.FindAsync(customerId);
+            var loyaltyCard = await _context.LoyaltyCards.FindAsync(loyaltyId);
             if (loyaltyCard == null)
             {
                 return null;
