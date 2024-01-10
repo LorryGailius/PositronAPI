@@ -79,7 +79,7 @@ namespace PositronAPI.Controllers
 
         [HttpGet]
         [Route("/employee/role/{roleId}")]
-        public async Task<ActionResult<List<Employee>>> GetEmployeesByRole([FromRoute][Required] long roleId, [FromQuery] int top, [FromQuery] int skip)
+        public async Task<ActionResult<List<Employee>>> GetEmployeesByRole([FromRoute][Required] Role roleId, [FromQuery] int top, [FromQuery] int skip)
         {
             if(top < 0 || skip < 0) { return BadRequest(); }
 
@@ -106,7 +106,8 @@ namespace PositronAPI.Controllers
             if(employee == null ||
                String.IsNullOrEmpty(employee.Name) ||
                String.IsNullOrEmpty(employee.Surname) ||
-               await _departmentService.GetDepartment(employee.DepartmentId) == null) { return false; }
+               await _departmentService.GetDepartment(employee.DepartmentId) == null ||
+               employee.Wage < 0) { return false; }
 
             return true;
         }
