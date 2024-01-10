@@ -21,7 +21,7 @@ namespace PositronAPI.Controllers
 
         [HttpPost]
         [Route("/appointment")]
-        public async Task<ActionResult<Appointment>> CreateAppointment([FromBody] Appointment body)
+        public async Task<ActionResult<Appointment>> CreateAppointment([FromBody] AppointmentImportDTO body)
         {
             if (await IsValidAppointment(body))
             {                
@@ -67,7 +67,7 @@ namespace PositronAPI.Controllers
             else { return Ok(response); }
         }
 
-        public async Task<bool> IsValidAppointment(Appointment appointment)
+        public async Task<bool> IsValidAppointment(AppointmentImportDTO appointment)
         {
             if (appointment == null ||
                 appointment.CustomerId == 0 ||

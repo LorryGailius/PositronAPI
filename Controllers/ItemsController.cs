@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PositronAPI.Models.Item;
+using PositronAPI.Models.Order;
 using PositronAPI.Services.ItemService;
 using System.ComponentModel.DataAnnotations;
 
@@ -21,7 +22,7 @@ namespace PositronAPI.Controllers
         /// <param name="body">Properties for creating a new item.</param>
         [HttpPost]
         [Route("/item")]
-        public async Task<ActionResult<Item>> CreateItem([FromBody] Item body)
+        public async Task<ActionResult<Item>> CreateItem([FromBody] ItemImportDTO body)
         {
             if (IsValidItem(body))
             {
@@ -102,11 +103,12 @@ namespace PositronAPI.Controllers
             return Ok(response);
         }
 
-        public bool IsValidItem(Item item)
+        public bool IsValidItem(ItemImportDTO item)
         {
             if (item == null ||
                String.IsNullOrEmpty(item.Name) ||
-               item.Stock < 0 ||
+               !Enum.IsDefined(typeof(ItemCategory), item.Category))
+                item.Stock < 0 ||
                item.Price < 0) { return false; }
 
             return true;

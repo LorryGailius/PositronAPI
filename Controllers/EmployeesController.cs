@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PositronAPI.Models.Employee;
+using PositronAPI.Models.Order;
 using PositronAPI.Services.DepartmentService;
 using PositronAPI.Services.EmployeeService;
 using System.ComponentModel.DataAnnotations;
@@ -19,7 +20,7 @@ namespace PositronAPI.Controllers
 
         [HttpPost]
         [Route("/employee")]
-        public async Task<ActionResult<Employee>> CreateEmployee([FromBody] Employee body)
+        public async Task<ActionResult<Employee>> CreateEmployee([FromBody] EmployeeImportDTO body)
         {
             if (await IsValidEmployee(body))
             {
@@ -101,13 +102,14 @@ namespace PositronAPI.Controllers
             else { return Ok(response); }
         }
 
-        private async Task<bool> IsValidEmployee(Employee employee)
+        private async Task<bool> IsValidEmployee(EmployeeImportDTO employee)
         {
             if(employee == null ||
                String.IsNullOrEmpty(employee.Name) ||
                String.IsNullOrEmpty(employee.Surname) ||
                await _departmentService.GetDepartment(employee.DepartmentId) == null ||
-               employee.Wage < 0) { return false; }
+               !Enum.IsDefined(typeof(Role), employee.Role))
+                employee.Wage < 0) { return false; }
 
             return true;
         }

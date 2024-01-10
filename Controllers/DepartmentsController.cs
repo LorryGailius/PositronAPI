@@ -19,7 +19,7 @@ namespace PositronAPI.Controllers
 
         [HttpPost]
         [Route("/department")]
-        public async Task<ActionResult<Department>> CreateDepartment([FromBody] Department body)
+        public async Task<ActionResult<Department>> CreateDepartment([FromBody] DepartmentImportDTO body)
         {
             if (IsValidDepartment(body))
             {
@@ -77,7 +77,7 @@ namespace PositronAPI.Controllers
             else { return Ok(response); }
         }
 
-        public bool IsValidDepartment(Department department)
+        public bool IsValidDepartment(DepartmentImportDTO department)
         {
             if (department == null ||
                String.IsNullOrEmpty(department.Name)) { return false; }

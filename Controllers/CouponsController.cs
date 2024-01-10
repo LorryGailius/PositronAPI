@@ -27,7 +27,7 @@ namespace PositronAPI.Controllers
         /// <returns>The created coupon.</returns>
         [HttpPost]
         [Route("/coupon")]
-        public async Task<ActionResult<Coupon>> CreateCoupon([FromBody][Required] Coupon body)
+        public async Task<ActionResult<Coupon>> CreateCoupon([FromBody][Required] CouponImportDTO body)
         {
             if (await IsValidCoupon(body)) 
             {
@@ -89,7 +89,7 @@ namespace PositronAPI.Controllers
             return Ok(response);
         }
 
-        public async Task<bool> IsValidCoupon(Coupon coupon)
+        public async Task<bool> IsValidCoupon(CouponImportDTO coupon)
         {
             if (coupon == null ||
                coupon.CustomerId == 0 ||

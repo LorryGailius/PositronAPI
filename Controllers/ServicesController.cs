@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PositronAPI.Models.Employee;
+using PositronAPI.Models.Order;
 using PositronAPI.Models.Schedule;
 using PositronAPI.Services.EmployeeService;
 using PositronAPI.Services.ServicesService;
@@ -21,12 +22,19 @@ namespace PositronAPI.Controllers
 
         [HttpPost]
         [Route("/service")]
-        public async Task<ActionResult<Service>> CreateService([FromBody] Service body)
+        public async Task<ActionResult<Service>> CreateService([FromBody] ServiceImportDTO body)
         {
             if (await IsValidService(body))
             {
-                var newService = new Service { EmployeeId = body.EmployeeId, Name = body.Name, Description = body.Description,
-                                                Duration = body.Duration, Price = body.Price, Category = body.Category};
+                var newService = new Service
+                {
+                    EmployeeId = body.EmployeeId,
+                    Name = body.Name,
+                    Description = body.Description,
+                    Duration = body.Duration,
+                    Price = body.Price,
+                    Category = body.Category
+                };
 
                 var response = await _servicesService.CreateService(newService);
 
@@ -81,7 +89,7 @@ namespace PositronAPI.Controllers
             else { return Ok(response); }
         }
 
-        public async Task<bool> IsValidService(Service service)
+        public async Task<bool> IsValidService(ServiceImportDTO service)
         {
             if (service == null ||
                String.IsNullOrEmpty(service.Name) ||
@@ -89,7 +97,9 @@ namespace PositronAPI.Controllers
                service.Duration < TimeSpan.Zero ||
                service.Duration == TimeSpan.Zero ||
                service.Duration > TimeSpan.FromHours(24) ||
-               await _employeeService.GetEmployee(service.EmployeeId) == null) { return false; }
+               await _employeeService.GetEmployee(service.EmployeeId) == null ||
+                !Enum.IsDefined(typeof(ServiceCategory), service.Category))
+            { return false; }
 
             return true;
         }

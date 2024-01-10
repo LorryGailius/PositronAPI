@@ -37,7 +37,7 @@ namespace PositronAPI.Controllers
         /// <returns>The created order.</returns>
         [HttpPost]
         [Route("/order")]
-        public async Task<ActionResult<Order>> CreateOrder([FromBody][Required] Order body)
+        public async Task<ActionResult<Order>> CreateOrder([FromBody][Required] OrderImportDTO body)
         {
             if (await IsValidOrder(body)) 
             {
@@ -166,11 +166,10 @@ namespace PositronAPI.Controllers
             else { return Ok(response); }
         }
 
-        public async Task<bool> IsValidOrder(Order order)
+        public async Task<bool> IsValidOrder(OrderImportDTO order)
         {
             if (order == null ||
                order.CustomerId == 0 ||
-               order.Status == OrderStatus.Pending ||
                !Enum.IsDefined(typeof(TaxCode), order.TaxCode)) { return false; }
 
             if(order.CustomerId.HasValue)

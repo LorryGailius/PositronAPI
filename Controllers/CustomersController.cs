@@ -23,7 +23,7 @@ namespace PositronAPI.Controllers
         /// <param name="body">Properties for creating a new customer.</param>
         [HttpPost]
         [Route("/customer")]
-        public async Task<ActionResult<Customer>> CreateCustomer([FromBody] Customer body)
+        public async Task<ActionResult<Customer>> CreateCustomer([FromBody] CustomerImportDTO body)
         {
             if (IsValidCustomer(body))
             {
@@ -103,7 +103,7 @@ namespace PositronAPI.Controllers
 
             return Ok(response);
         }
-        public bool IsValidCustomer(Customer customer)
+        public bool IsValidCustomer(CustomerImportDTO customer)
         {
             if (customer == null ||
                String.IsNullOrEmpty(customer.Name)) { return false; }

@@ -26,7 +26,7 @@ namespace PositronAPI.Controllers
         /// <param name="body">Properties for creating a new loyalty card.</param>
         [HttpPost]
         [Route("/loyaltyCard")]
-        public async Task<ActionResult> CreateLoyaltyCard([FromBody][Required] LoyaltyCard body)
+        public async Task<ActionResult> CreateLoyaltyCard([FromBody][Required] LoyaltyCardImportDTO body)
         {
             if (await IsValidLoyaltyCard(body))
             {
@@ -71,7 +71,7 @@ namespace PositronAPI.Controllers
             return Ok(response);
         }
 
-        public async Task<bool> IsValidLoyaltyCard(LoyaltyCard loyaltyCard)
+        public async Task<bool> IsValidLoyaltyCard(LoyaltyCardImportDTO loyaltyCard)
         {
             if (loyaltyCard == null ||
                 await _customerService.GetCustomer(loyaltyCard.CustomerId) == null ||
