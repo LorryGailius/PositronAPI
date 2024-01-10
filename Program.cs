@@ -9,6 +9,7 @@ using PositronAPI.Services.ItemService;
 using PositronAPI.Services.LoyaltyService;
 using PositronAPI.Services.OrderService;
 using PositronAPI.Services.ServicesService;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,12 @@ builder.Services.AddScoped<IServicesService, ServicesService>();
 
 // Add our DbContext
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddControllers()
+    .AddJsonOptions(option =>
+    {
+        option.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
 var app = builder.Build();
 
