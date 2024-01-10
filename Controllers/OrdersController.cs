@@ -16,12 +16,12 @@ namespace PositronAPI.Controllers
 {
     public class OrdersController : ControllerBase
     {
-        private readonly OrderService _orderService;
-        private readonly CustomerService _customerService;
-        private readonly ItemService _itemService;
-        private readonly ServicesService _servicesService;
+        private readonly IOrderService _orderService;
+        private readonly ICustomerService _customerService;
+        private readonly IItemService _itemService;
+        private readonly IServicesService _servicesService;
 
-        public OrdersController(OrderService orderService, CustomerService customerService, ItemService itemService, ServicesService servicesService)
+        public OrdersController(IOrderService orderService, ICustomerService customerService, IItemService itemService, IServicesService servicesService)
         {
             _orderService = orderService;
             _customerService = customerService;

@@ -20,15 +20,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add our services
-builder.Services.AddScoped<AppointmentService>();
-builder.Services.AddScoped<CouponService>();
-builder.Services.AddScoped<CustomerService>();
-builder.Services.AddScoped<DepartmentService>();
-builder.Services.AddScoped<EmployeeService>();
-builder.Services.AddScoped<ItemService>();
-builder.Services.AddScoped<LoyaltyService>();
-builder.Services.AddScoped<OrderService>();
-builder.Services.AddScoped<ServicesService>();
+builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+builder.Services.AddScoped<ICouponService, CouponService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IItemService, ItemService>();
+builder.Services.AddScoped<ILoyaltyService, LoyaltyService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IServicesService, ServicesService>();
 
 // Add our DbContext
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));

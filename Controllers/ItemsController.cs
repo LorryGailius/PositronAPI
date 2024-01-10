@@ -7,9 +7,9 @@ namespace PositronAPI.Controllers
 {
     public class ItemsController : ControllerBase
     {
-        private readonly ItemService _itemService;
+        private readonly IItemService _itemService;
 
-        public ItemsController(ItemService itemService)
+        public ItemsController(IItemService itemService)
         {
             _itemService = itemService;
         }

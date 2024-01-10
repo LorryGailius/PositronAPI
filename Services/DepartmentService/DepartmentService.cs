@@ -4,7 +4,7 @@ using PositronAPI.Models.Department;
 
 namespace PositronAPI.Services.DepartmentService
 {
-    public class DepartmentService
+    public class DepartmentService : IDepartmentService
     {
         private readonly AppDbContext _context;
 

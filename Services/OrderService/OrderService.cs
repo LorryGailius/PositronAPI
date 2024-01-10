@@ -4,7 +4,7 @@ using PositronAPI.Models.Order;
 
 namespace PositronAPI.Services.OrderService
 {
-    public class OrderService
+    public class OrderService : IOrderService
     {
         private readonly AppDbContext _context;
 

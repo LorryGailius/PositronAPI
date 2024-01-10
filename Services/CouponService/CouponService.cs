@@ -4,7 +4,7 @@ using PositronAPI.Models.Coupon;
 
 namespace PositronAPI.Services.CouponService
 {
-    public class CouponService
+    public class CouponService : ICouponService
     {
         private readonly AppDbContext _context;
 

@@ -4,7 +4,7 @@ using PositronAPI.Models.Schedule;
 
 namespace PositronAPI.Services.AppointmentService
 {
-    public class AppointmentService
+    public class AppointmentService : IAppointmentService
     {
         private readonly AppDbContext _context;
 
