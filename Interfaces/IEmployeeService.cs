@@ -9,5 +9,7 @@ namespace PositronAPI.Services.EmployeeService
         Task<Employee> EditEmployee(Employee employee, long employeeId);
         Task<Employee> GetEmployee(long employeeId);
         Task<List<Employee>> GetEmployees(int top = 10, int skip = 0);
+        Task<List<Employee>> GetEmployees(long departmentId, int top = 10, int skip = 0);
+        Task<List<Employee>> GetEmployees(Role role, int top = 10, int skip = 0);
     }
 }
