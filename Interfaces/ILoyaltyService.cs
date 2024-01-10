@@ -7,5 +7,6 @@ namespace PositronAPI.Services.LoyaltyService
         Task<LoyaltyCard> CreateLoyaltyCard(LoyaltyCard loyaltyCard);
         Task<LoyaltyCard> DeleteLoyaltyCard(long customerId);
         Task<LoyaltyCard> GetLoyaltyCard(long loyaltyCardId);
+        Task<LoyaltyCard> GetLoyaltyCardByCustomer(long customerId);
     }
 }
