@@ -12,5 +12,5 @@ public class CouponImportDTO
 
 
     [DataMember(Name = "Amount")]
-    public decimal? Amount { get; set; }
+    public double? Amount { get; set; }
 }

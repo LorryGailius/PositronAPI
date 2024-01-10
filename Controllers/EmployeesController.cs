@@ -108,7 +108,7 @@ namespace PositronAPI.Controllers
                String.IsNullOrEmpty(employee.Name) ||
                String.IsNullOrEmpty(employee.Surname) ||
                await _departmentService.GetDepartment(employee.DepartmentId) == null ||
-               !Enum.IsDefined(typeof(Role), employee.Role))
+               !Enum.IsDefined(typeof(Role), employee.Role) ||
                 employee.Wage < 0) { return false; }
 
             return true;

@@ -26,10 +26,7 @@ namespace PositronAPI.Controllers
         {
             if (IsValidItem(body))
             {
-                var newItem = new Item { Name = body.Name, Category = body.Category,
-                                        Description = body.Description, Price = body.Price , Stock = body.Stock};
-
-                var response = await _itemService.CreateItem(newItem);
+                var response = await _itemService.CreateItem(body);
 
                 if (response == null) { return BadRequest(); }
                 else { return Created(String.Empty, response); }
@@ -80,7 +77,13 @@ namespace PositronAPI.Controllers
         [Route("/item/{itemId}")]
         public async Task<ActionResult<Item>> GetItem([FromRoute][Required] long itemId)
         {
-            return await _itemService.GetItem(itemId);
+            var response = await _itemService.GetItem(itemId);
+            if (response is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(response);
         }
 
         /// <summary>
@@ -107,7 +110,7 @@ namespace PositronAPI.Controllers
         {
             if (item == null ||
                String.IsNullOrEmpty(item.Name) ||
-               !Enum.IsDefined(typeof(ItemCategory), item.Category))
+               !Enum.IsDefined(typeof(ItemCategory), item.Category) ||
                 item.Stock < 0 ||
                item.Price < 0) { return false; }
 

@@ -30,9 +30,8 @@ namespace PositronAPI.Controllers
         {
             if (await IsValidLoyaltyCard(body))
             {
-                var newLoyaltyCard = new LoyaltyCard { CustomerId = body.CustomerId, Balance = body.Balance };
 
-                var response = await _loyaltyService.CreateLoyaltyCard(newLoyaltyCard);
+                var response = await _loyaltyService.CreateLoyaltyCard(body);
 
                 if (response == null) { return BadRequest(); }
                 else { return Created(String.Empty, response); }
@@ -75,8 +74,7 @@ namespace PositronAPI.Controllers
         {
             if (loyaltyCard == null ||
                 await _customerService.GetCustomer(loyaltyCard.CustomerId) == null ||
-                await _loyaltyService.GetLoyaltyCardByCustomer(loyaltyCard.CustomerId) != null ||
-                loyaltyCard.Balance < 0) { return false; }
+                await _loyaltyService.GetLoyaltyCardByCustomer(loyaltyCard.CustomerId) != null) { return false; }
 
             return true;
         }

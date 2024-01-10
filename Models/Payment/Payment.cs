@@ -13,7 +13,7 @@ namespace PositronAPI.Models.Payment
         public long OrderId { get; set; }
 
         [DataMember(Name = "amount")]
-        public decimal Amount { get; set; }
+        public double Amount { get; set; }
 
         [DataMember(Name = "paymentMethod")]
         public PaymentMethod PaymentMethod { get; set; }

@@ -14,7 +14,7 @@ public class ItemImportDTO
     public string? Description { get; set; }
 
     [DataMember(Name = "price")]
-    public decimal Price { get; set; } = 0.0M;
+    public double Price { get; set; } = 0.0;
 
     [DataMember(Name = "stock")]
     public int Stock { get; set; } = 0;

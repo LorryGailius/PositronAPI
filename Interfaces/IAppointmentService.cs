@@ -4,7 +4,7 @@ namespace PositronAPI.Services.AppointmentService
 {
     public interface IAppointmentService
     {
-        Task<Appointment> CreateAppointment(Appointment appointment);
+        Task<Appointment> CreateAppointment(AppointmentImportDTO appointment);
         Task<Appointment> DeleteAppointment(long appointmentId);
         Task<Appointment> EditAppointment(Appointment appointment, long appointmentId);
         Task<Appointment> GetAppointment(long appointmentId);

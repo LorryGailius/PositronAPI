@@ -10,7 +10,7 @@ public class EmployeeImportDTO
 
     [DataMember(Name = "role")] public Role Role { get; set; }
 
-    [DataMember(Name = "wage")] public decimal Wage { get; set; }
+    [DataMember(Name = "wage")] public double Wage { get; set; }
 
     [DataMember(Name = "departmentId")] public long DepartmentId { get; set; }
 }

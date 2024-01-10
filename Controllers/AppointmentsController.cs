@@ -25,9 +25,7 @@ namespace PositronAPI.Controllers
         {
             if (await IsValidAppointment(body))
             {                
-                var newAppointment = new Appointment { CustomerId = body.CustomerId, ServiceId = body.ServiceId, Date = body.Date };
-                
-                var response = await _appointmentService.CreateAppointment(newAppointment);
+                var response = await _appointmentService.CreateAppointment(body);
 
                 if (response == null) { return BadRequest(); }
                 else { return Created(String.Empty, response); }

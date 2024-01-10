@@ -32,7 +32,7 @@ namespace PositronAPI.Models.Coupon
         /// </summary>
 
         [DataMember(Name = "Amount")]
-        public decimal? Amount { get; set; }
+        public double? Amount { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

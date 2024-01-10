@@ -14,7 +14,7 @@ namespace PositronAPI.Services.LoyaltyService
         }
 
         // Add a loyalty card
-        public async Task<LoyaltyCard> CreateLoyaltyCard(LoyaltyCard loyaltyCard)
+        public async Task<LoyaltyCard> CreateLoyaltyCard(LoyaltyCardImportDTO loyaltyCard)
         {
             var customer = await _context.Customers.FindAsync(loyaltyCard.CustomerId);
             if (customer == null)
@@ -22,9 +22,11 @@ namespace PositronAPI.Services.LoyaltyService
                 return null;
             }
 
-            _context.LoyaltyCards.Add(loyaltyCard);
+            var newLoyaltyCard = new LoyaltyCard { CustomerId = loyaltyCard.CustomerId, Balance = 0};
+
+            _context.LoyaltyCards.Add(newLoyaltyCard);
             await _context.SaveChangesAsync();
-            return loyaltyCard;
+            return newLoyaltyCard;
         }
 
         // Remove a loyalty card

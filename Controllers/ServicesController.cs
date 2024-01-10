@@ -5,6 +5,7 @@ using PositronAPI.Models.Schedule;
 using PositronAPI.Services.EmployeeService;
 using PositronAPI.Services.ServicesService;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace PositronAPI.Controllers
 {
@@ -24,19 +25,10 @@ namespace PositronAPI.Controllers
         [Route("/service")]
         public async Task<ActionResult<Service>> CreateService([FromBody] ServiceImportDTO body)
         {
+            
             if (await IsValidService(body))
             {
-                var newService = new Service
-                {
-                    EmployeeId = body.EmployeeId,
-                    Name = body.Name,
-                    Description = body.Description,
-                    Duration = body.Duration,
-                    Price = body.Price,
-                    Category = body.Category
-                };
-
-                var response = await _servicesService.CreateService(newService);
+                var response = await _servicesService.CreateService(body);
 
                 if (response == null) { return BadRequest(); }
                 else { return Created(String.Empty, response); }
@@ -91,12 +83,15 @@ namespace PositronAPI.Controllers
 
         public async Task<bool> IsValidService(ServiceImportDTO service)
         {
+            var json = JsonConvert.SerializeObject(service);
+
+            Console.WriteLine(json);
+
+            Console.WriteLine(service.Duration);
+
             if (service == null ||
                String.IsNullOrEmpty(service.Name) ||
                service.Price == 0 ||
-               service.Duration < TimeSpan.Zero ||
-               service.Duration == TimeSpan.Zero ||
-               service.Duration > TimeSpan.FromHours(24) ||
                await _employeeService.GetEmployee(service.EmployeeId) == null ||
                 !Enum.IsDefined(typeof(ServiceCategory), service.Category))
             { return false; }

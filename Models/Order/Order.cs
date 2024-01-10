@@ -16,7 +16,7 @@ namespace PositronAPI.Models.Order
         public OrderStatus Status { get; set; } = OrderStatus.Pending;
 
         [DataMember(Name = "total")]
-        public decimal Total { get; set; } = 0.0M;
+        public double Total { get; set; } = 0.0;
 
         [DataMember(Name = "taxCode")]
         public TaxCode TaxCode { get; set; }

@@ -35,7 +35,7 @@ namespace PositronAPI.Models.Item
         /// </summary>
 
         [DataMember(Name = "price")]
-        public decimal Price { get; set; } = 0.0M;
+        public double Price { get; set; } = 0.0;
 
         /// <summary>
         /// Gets or Sets Stock

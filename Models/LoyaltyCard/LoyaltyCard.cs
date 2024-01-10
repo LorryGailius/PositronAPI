@@ -26,7 +26,7 @@ namespace PositronAPI.Models.LoyaltyCard
 
         [DataMember(Name = "balance")]
         [Range(0, double.MaxValue)]
-        public decimal Balance { get; set; } = 0.0M;
+        public double Balance { get; set; } = 0.0;
 
         /// <summary>
         /// Returns the string presentation of the object
