@@ -8,10 +8,10 @@ namespace PositronAPI.Controllers
 {
     public class LoyaltyCardsController : ControllerBase
     {
-        private readonly LoyaltyService _loyaltyService;
-        private readonly CustomerService _customerService;
+        private readonly ILoyaltyService _loyaltyService;
+        private readonly ICustomerService _customerService;
 
-        public LoyaltyCardsController(LoyaltyService loyaltyService, CustomerService customerService)
+        public LoyaltyCardsController(ILoyaltyService loyaltyService, ICustomerService customerService)
         {
             _loyaltyService = loyaltyService;
             _customerService = customerService;
