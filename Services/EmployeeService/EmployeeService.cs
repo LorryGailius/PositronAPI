@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PositronAPI.Context;
 using PositronAPI.Models.Employee;
 
@@ -65,6 +64,16 @@ namespace PositronAPI.Services.EmployeeService
         public async Task<List<Employee>> GetEmployees(int top = 10, int skip = 0)
         {
             return await _context.Employees.Skip(skip).Take(top).ToListAsync();
+        }
+
+        public async Task<List<Employee>> GetEmployees(long departmentId, int top = 10, int skip = 0)
+        {
+            return await _context.Employees.Where(e => e.DepartmentId == departmentId).Skip(skip).Take(top).ToListAsync();
+        }
+
+        public async Task<List<Employee>> GetEmployees(Role role, int top = 10, int skip = 0)
+        {
+            return await _context.Employees.Where(e => e.Role == role).Skip(skip).Take(top).ToListAsync();
         }
     }
 }

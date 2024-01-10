@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PositronAPI.Context;
-using PositronAPI.Models.Item;
 using PositronAPI.Models.Order;
-using PositronAPI.Models.Schedule;
 
 namespace PositronAPI.Services.OrderService
 {
@@ -74,6 +72,11 @@ namespace PositronAPI.Services.OrderService
             await _context.SaveChangesAsync();
 
             return existingOrder;
+        }
+
+        public decimal Subtotal(decimal price, int quantity)
+        {
+            return price * quantity;
         }
     }
 }

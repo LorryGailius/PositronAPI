@@ -1,4 +1,5 @@
-﻿using PositronAPI.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using PositronAPI.Context;
 using PositronAPI.Models.LoyaltyCard;
 
 namespace PositronAPI.Services.LoyaltyService
@@ -46,6 +47,9 @@ namespace PositronAPI.Services.LoyaltyService
             return await _context.LoyaltyCards.FindAsync(loyaltyCardId);
         }
 
-
+        public async Task<LoyaltyCard> GetLoyaltyCardByCustomer(long customerId)
+        {
+            return await _context.LoyaltyCards.FirstOrDefaultAsync(l => l.CustomerId == customerId);
+        }
     }
 }
