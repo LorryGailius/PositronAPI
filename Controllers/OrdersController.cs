@@ -51,7 +51,7 @@ namespace PositronAPI.Controllers
         }
 
         [HttpPost]
-        [Route("/order/{orderId}/additem/{itemId}/{quantity}")]
+        [Route("/order/{orderId}/{itemId}/{quantity}")]
         public async Task<ActionResult<ItemModelDTO>> AddItemToOrder([FromRoute][Required] long orderId,
                                                        [FromRoute][Required] long itemId, [FromRoute][Required] int quantity)
         {
@@ -73,7 +73,7 @@ namespace PositronAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("/order/{orderId}/additem/{itemId}")]
+        [Route("/order/{orderId}/{itemId}")]
         public async Task<ActionResult> RemoveItemFromOrder([FromRoute][Required] long orderId,
                                                             [FromRoute][Required] long itemId)
         {
@@ -102,8 +102,8 @@ namespace PositronAPI.Controllers
 
 
         [HttpPost]
-        [Route("/order/{orderId}/addservice/{serviceId}/{quantity}")]
-        public async Task<ActionResult> AddServiceToOrder([FromRoute][Required] long orderId,
+        [Route("/order/{orderId}/{serviceId}/{quantity}")]
+        public async Task<ActionResult<ServiceModelDTO>> AddServiceToOrder([FromRoute][Required] long orderId,
                                                        [FromRoute][Required] long serviceId, [FromRoute][Required] int quantity)
         {
             Service responseService = await IsValidServiceOrder(orderId, serviceId);
@@ -158,7 +158,7 @@ namespace PositronAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("/order/{orderId}/removeservice/{serviceId}")]
+        [Route("/order/{orderId}/{serviceId}")]
         public async Task<ActionResult> RemoveServiceFromOrder([FromRoute][Required] long orderId,
             [FromRoute][Required] long serviceId)
         {

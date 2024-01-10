@@ -7,7 +7,7 @@ namespace PositronAPI.Services.OrderService
     {
         Task<Order> CreateOrder(OrderImportDTO order);
         Task<ItemModelDTO> AddItemToOrder(ItemOrder itemOrder);
-        Task<ServiceOrder> AddServiceToOrder(ServiceOrder serviceOrder);
+        Task<ServiceModelDTO> AddServiceToOrder(ServiceOrder serviceOrder);
         Task<Order> GetOrder(long orderId);
         Task<List<ItemModelDTO>> GetOrderItems(long orderId);
         Task<List<ServiceModelDTO>> GetOrderServices(long orderId);
