@@ -27,8 +27,8 @@ builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<ILoyaltyService, LoyaltyService>();
-builder.Services.AddScoped<OrderService>();
-builder.Services.AddScoped<ServicesService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IServicesService, ServicesService>();
 
 // Add our DbContext
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
