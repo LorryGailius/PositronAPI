@@ -9,11 +9,11 @@ namespace PositronAPI.Controllers
 {
     public class ServicesController : ControllerBase
     {
-        private readonly ServicesService _servicesService;
-        private readonly EmployeeService _employeeService;
+        private readonly IServicesService _servicesService;
+        private readonly IEmployeeService _employeeService;
 
 
-        public ServicesController(ServicesService servicesService, EmployeeService employeeService)
+        public ServicesController(IServicesService servicesService, IEmployeeService employeeService)
         {
             _servicesService = servicesService;
             _employeeService = employeeService;

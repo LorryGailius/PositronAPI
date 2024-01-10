@@ -8,10 +8,10 @@ namespace PositronAPI.Controllers
 {
     public class DepartmentsController : ControllerBase
     {
-        private readonly DepartmentService _departmentService;
-        private readonly EmployeeService _employeeService;
+        private readonly IDepartmentService _departmentService;
+        private readonly IEmployeeService _employeeService;
 
-        public DepartmentsController(DepartmentService departmentService, EmployeeService employeeService)
+        public DepartmentsController(IDepartmentService departmentService, IEmployeeService employeeService)
         {
             _departmentService = departmentService;
             _employeeService = employeeService;

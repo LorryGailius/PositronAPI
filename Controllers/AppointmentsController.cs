@@ -8,11 +8,11 @@ namespace PositronAPI.Controllers
 {
     public class AppointmentsController : ControllerBase
     {
-        private readonly AppointmentService _appointmentService;
-        private readonly ServicesService _servicesService;
-        private readonly CustomerService _customerService;
+        private readonly IAppointmentService _appointmentService;
+        private readonly IServicesService _servicesService;
+        private readonly ICustomerService _customerService;
 
-        public AppointmentsController(AppointmentService appointmentService, ServicesService servicesService, CustomerService customerService)
+        public AppointmentsController(IAppointmentService appointmentService, IServicesService servicesService, ICustomerService customerService)
         {
             _appointmentService = appointmentService;
             _servicesService = servicesService;
