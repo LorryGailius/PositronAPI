@@ -4,6 +4,7 @@ using PositronAPI.Models.Order;
 using PositronAPI.Services.DepartmentService;
 using PositronAPI.Services.EmployeeService;
 using System.ComponentModel.DataAnnotations;
+using PositronAPI.Models.Schedule;
 
 namespace PositronAPI.Controllers
 {
@@ -52,6 +53,20 @@ namespace PositronAPI.Controllers
 
             if (response == null) { return BadRequest(); }
             else { return Ok(response); }
+        }
+
+        [HttpGet]
+        [Route("/employee/{employeeId}/schedule")]
+        public async Task<ActionResult> GetSchedule([FromRoute] [Required] long employeeId, [FromQuery][Required] DateTime date)
+        {
+            var response = await _employeeService.GetSchedule(employeeId, date);
+
+            if (response is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(response);
         }
 
         [HttpGet]
