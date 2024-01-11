@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 using PositronAPI.Models.Schedule;
 using PositronAPI.Services.AppointmentService;
 using PositronAPI.Services.CustomerService;
@@ -21,7 +22,7 @@ namespace PositronAPI.Controllers
 
         [HttpPost]
         [Route("/appointment")]
-        public async Task<ActionResult<Appointment>> CreateAppointment([FromBody] AppointmentImportDTO body)
+        public async Task<ActionResult<Appointment>> CreateAppointment([FromBody][Required] AppointmentImportDTO body)
         {
             if (await IsValidAppointment(body))
             {                
@@ -46,7 +47,7 @@ namespace PositronAPI.Controllers
 
         [HttpPut]
         [Route("/appointment/{appointmentId}")]
-        public async Task<ActionResult<Appointment>> EditAppointment([FromBody] Appointment body, [FromRoute] long appointmentId)
+        public async Task<ActionResult<Appointment>> EditAppointment([FromBody][Required] AppointmentUpdateDTO body, [FromRoute][Required] long appointmentId)
         {
             if (body == null) { return BadRequest(); }
             var response = await _appointmentService.EditAppointment(body, appointmentId);

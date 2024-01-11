@@ -35,7 +35,7 @@ namespace PositronAPI.Services.EmployeeService
             return employee;
         }
 
-        public async Task<Employee> EditEmployee(Employee employee, long employeeId)
+        public async Task<Employee> EditEmployee(EmployeeUpdateDTO employee, long employeeId)
         {
             var existingemployee = await _context.Employees.FindAsync(employeeId);
             if (existingemployee == null)

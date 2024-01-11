@@ -46,9 +46,8 @@ namespace PositronAPI.Controllers
 
         [HttpPut]
         [Route("/department/{departmentId}")]
-        public async Task<ActionResult<Department>> EditDepartment([FromBody] Department body, [FromRoute][Required] long departmentId)
+        public async Task<ActionResult<Department>> EditDepartment([FromBody][Required] DepartmentUpdateDTO body, [FromRoute][Required] long departmentId)
         {
-            if (body == null) { return BadRequest(); }
             var response = await _departmentService.EditDepartment(body, departmentId);
 
             if (response == null) { return BadRequest(); }

@@ -96,7 +96,7 @@ namespace PositronAPI.Services.OrderService
         }
 
         // Edit Order
-        public async Task<Order> EditOrder(Order order, long orderId)
+        public async Task<Order> EditOrder(OrderUpdateDTO order, long orderId)
         {
             var existingOrder = await _context.Orders.FindAsync(orderId);
             if (existingOrder == null)
@@ -121,11 +121,14 @@ namespace PositronAPI.Services.OrderService
 
             var orderItem = await _context.ItemOrders.FirstOrDefaultAsync(x => x.OrderId == orderId && x.ItemId == itemId);
 
-            if (orderItem is null)
+            if (orderItem is null || order is null)
             {
                 return -1;
             }
 
+            order.Total -= orderItem.Subtotal;
+
+            _context.Orders.Update(order);
             _context.ItemOrders.Remove(orderItem);
             await _context.SaveChangesAsync();
             return itemId;
@@ -138,11 +141,14 @@ namespace PositronAPI.Services.OrderService
 
             var orderService = await _context.ServiceOrders.FirstOrDefaultAsync(x => x.OrderId == orderId && x.ServiceId == serviceId);
 
-            if (orderService is null)
+            if (orderService is null || order is null)
             {
                 return -1;
             }
 
+            order.Total -= orderService.Subtotal;
+
+            _context.Orders.Update(order);
             _context.ServiceOrders.Remove(orderService);
             await _context.SaveChangesAsync();
             return serviceId;

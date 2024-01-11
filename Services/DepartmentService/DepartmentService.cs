@@ -33,7 +33,7 @@ namespace PositronAPI.Services.DepartmentService
             return department;
         }
 
-        public async Task<Department> EditDepartment(Department department, long departmentId)
+        public async Task<Department> EditDepartment(DepartmentUpdateDTO department, long departmentId)
         {
             var existingDepartment = await _context.Departments.FindAsync(departmentId);
             if (existingDepartment == null)

@@ -6,7 +6,7 @@ namespace PositronAPI.Services.AppointmentService
     {
         Task<Appointment> CreateAppointment(AppointmentImportDTO appointment);
         Task<Appointment> DeleteAppointment(long appointmentId);
-        Task<Appointment> EditAppointment(Appointment appointment, long appointmentId);
+        Task<Appointment> EditAppointment(AppointmentUpdateDTO appointment, long appointmentId);
         Task<Appointment> GetAppointment(long appointmentId);
         Task<List<Appointment>> GetAppointments(long customerId);
         Task<List<Appointment>> GetAppointmentsForService(long serviceId);
