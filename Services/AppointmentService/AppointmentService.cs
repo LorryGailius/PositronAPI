@@ -38,7 +38,7 @@ namespace PositronAPI.Services.AppointmentService
         }
 
         // Edit an appointment
-        public async Task<Appointment> EditAppointment(Appointment appointment, long appointmentId)
+        public async Task<Appointment> EditAppointment(AppointmentUpdateDTO appointment, long appointmentId)
         {
             var existingAppointment = await _context.Appointments.FindAsync(appointmentId);
             if (existingAppointment == null)

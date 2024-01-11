@@ -9,6 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Coupon\NewFile.cs" />
+    <Compile Remove="Models\Customer\.cs" />
+    <Compile Remove="Models\Customer\CustomerUodateDTO.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Models\Coupon\NewFile.txt" />
+    <None Remove="Models\Customer\NewFile.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>

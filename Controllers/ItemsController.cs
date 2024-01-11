@@ -58,10 +58,8 @@ namespace PositronAPI.Controllers
         /// <param name="itemId">The id of the item</param>
         [HttpPut]
         [Route("/item/{itemId}")]
-        public async Task<ActionResult> EditItem([FromBody] Item body, [FromRoute][Required] long itemId)
+        public async Task<ActionResult> EditItem([FromBody][Required] ItemUpdateDTO body, [FromRoute][Required] long itemId)
         {
-            if (body.Id != 0 && body.Id != itemId) { return BadRequest(); }
-
             var response = await _itemService.EditItem(body, itemId);
 
             if (response == null) { return NotFound(); }

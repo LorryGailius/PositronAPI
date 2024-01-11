@@ -61,10 +61,8 @@ namespace PositronAPI.Controllers
         /// <param name="customerId">The id of the customer</param>
         [HttpPut]
         [Route("/customer/{customerId}")]
-        public async Task<ActionResult> EditCustomer([FromBody] Customer body, [FromRoute][Required] long customerId)
+        public async Task<ActionResult> EditCustomer([FromBody][Required] CustomerUpdateDTO body, [FromRoute][Required] long customerId)
         {
-            if (body.Id != 0 && body.Id != customerId) { return BadRequest(); }
-
             var response = await _customerService.EditCustomer(body, customerId);
 
             if (response == null) { return NotFound(); }

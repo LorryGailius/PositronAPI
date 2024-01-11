@@ -181,9 +181,8 @@ namespace PositronAPI.Controllers
 
         [HttpPut]
         [Route("/order/{orderId}")]
-        public async Task<ActionResult<Order>> EditOrder([FromBody] Order body, [FromRoute][Required] long orderId)
+        public async Task<ActionResult<Order>> EditOrder([FromBody][Required] OrderUpdateDTO body, [FromRoute][Required] long orderId)
         {
-            if (body == null) { return BadRequest(); }
             var response = await _orderService.EditOrder(body, orderId);
 
             if (response == null) { return BadRequest(); }

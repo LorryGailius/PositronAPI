@@ -46,9 +46,8 @@ namespace PositronAPI.Controllers
 
         [HttpPut]
         [Route("/employee/{employeeId}")]
-        public async Task<ActionResult<Employee>> EditEmployee([FromBody] Employee body, [FromRoute][Required] long employeeId)
+        public async Task<ActionResult<Employee>> EditEmployee([FromBody][Required] EmployeeUpdateDTO body, [FromRoute][Required] long employeeId)
         {
-            if (body == null) { return BadRequest(); }
             var response = await _employeeService.EditEmployee(body, employeeId);
 
             if (response == null) { return BadRequest(); }

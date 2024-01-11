@@ -36,7 +36,7 @@ namespace PositronAPI.Services.CustomerService
         }
 
         // Edit a customer
-        public async Task<Customer> EditCustomer(Customer customer, long customerId)
+        public async Task<Customer> EditCustomer(CustomerUpdateDTO customer, long customerId)
         {
             var existingCustomer = await _context.Customers.FindAsync(customerId);
             if (existingCustomer == null)

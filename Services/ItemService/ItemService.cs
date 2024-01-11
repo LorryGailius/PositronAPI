@@ -46,7 +46,7 @@ namespace PositronAPI.Services.ItemService
         }
 
         // Edit an item in the database
-        public async Task<Item> EditItem(Item item, long itemId)
+        public async Task<Item> EditItem(ItemUpdateDTO item, long itemId)
         {
             var existingItem = await _context.Items.FindAsync(itemId);
             if (existingItem == null)
@@ -57,6 +57,8 @@ namespace PositronAPI.Services.ItemService
             existingItem.Name = item.Name;
             existingItem.Price = item.Price;
             existingItem.Category = item.Category;
+            existingItem.Description = item.Description;
+            existingItem.Stock = item.Stock;
 
             await _context.SaveChangesAsync();
 

@@ -37,7 +37,7 @@ namespace PositronAPI.Services.ServicesService
         }
 
         // Edit a service
-        public async Task<Service> EditService(Service service, long serviceId)
+        public async Task<Service> EditService(ServiceUpdateDTO service, long serviceId)
         {
             var existingService = await _context.Services.FindAsync(serviceId);
             if (existingService == null)

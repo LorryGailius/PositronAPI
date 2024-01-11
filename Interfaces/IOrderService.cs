@@ -13,7 +13,7 @@ namespace PositronAPI.Services.OrderService
         Task<List<ServiceModelDTO>> GetOrderServices(long orderId);
         Task<long> RemoveItemFromOrder(long orderId, long itemId);
         Task<long> RemoveServiceFromOrder(long orderId, long serviceId);
-        Task<Order> EditOrder(Order order, long orderId);
+        Task<Order> EditOrder(OrderUpdateDTO order, long orderId);
         double Subtotal(double price, int quantity);
     }
 }

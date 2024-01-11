@@ -49,9 +49,8 @@ namespace PositronAPI.Controllers
 
         [HttpPut]
         [Route("/service/{serviceId}")]
-        public async Task<ActionResult<Service>> EditService([FromBody] Service body, [FromRoute][Required] long serviceId)
+        public async Task<ActionResult<Service>> EditService([FromBody][Required] ServiceUpdateDTO body, [FromRoute][Required] long serviceId)
         {
-            if (body == null) { return BadRequest(); }
             var response = await _servicesService.EditService(body, serviceId);
 
             if (response == null) { return BadRequest(); }
