@@ -15,11 +15,20 @@ namespace PositronAPI.Services.ItemService
 
 
         // Add an item
-        public async Task<Item> CreateItem(Item item)
+        public async Task<Item> CreateItem(ItemImportDTO item)
         {
-            _context.Items.Add(item);
+            var newItem = new Item
+            {
+                Name = item.Name,
+                Category = item.Category,
+                Description = item.Description,
+                Price = item.Price,
+                Stock = item.Stock
+            };
+
+            _context.Items.Add(newItem);
             await _context.SaveChangesAsync();
-            return item;
+            return newItem;
         }
 
         // Remove an item from the database

@@ -37,13 +37,11 @@ namespace PositronAPI.Controllers
         /// <returns>The created order.</returns>
         [HttpPost]
         [Route("/order")]
-        public async Task<ActionResult<Order>> CreateOrder([FromBody][Required] Order body)
+        public async Task<ActionResult<Order>> CreateOrder([FromBody][Required] OrderImportDTO body)
         {
-            if (await IsValidOrder(body)) 
+            if (await IsValidOrder(body))
             {
-                var newOrder = new Order { CustomerId = body.CustomerId, Status = body.Status, Total = body.Total, TaxCode  = body.TaxCode };
-
-                var response = await _orderService.CreateOrder(newOrder);
+                var response = await _orderService.CreateOrder(body);
 
                 if (response == null) { return BadRequest(); }
                 else { return Created(String.Empty, response); }
@@ -54,20 +52,35 @@ namespace PositronAPI.Controllers
 
         [HttpPost]
         [Route("/order/{orderId}/additem/{itemId}/{quantity}")]
-        public async Task<ActionResult> AddItemToOrder([FromRoute][Required] long orderId,
+        public async Task<ActionResult<ItemModelDTO>> AddItemToOrder([FromRoute][Required] long orderId,
                                                        [FromRoute][Required] long itemId, [FromRoute][Required] int quantity)
         {
             Item responseItem = await IsValidItemOrder(orderId, itemId);
             if (responseItem is null) { return NotFound(); }
 
-            decimal subtotal = _orderService.Subtotal(responseItem.Price, quantity);
+            double subtotal = _orderService.Subtotal(responseItem.Price, quantity);
 
-            ItemOrder itemOrder = new ItemOrder { OrderId = orderId, ItemId = itemId, Quantity = quantity, Subtotal = subtotal};
+            ItemOrder itemOrder = new ItemOrder { OrderId = orderId, ItemId = itemId, Quantity = quantity, Subtotal = subtotal };
 
-            var response = _orderService.AddItemToOrder(itemOrder);
+            var response = await _orderService.AddItemToOrder(itemOrder);
 
             if (response == null) { return BadRequest(); }
-            else { return Created(String.Empty, response); }
+            else
+            {
+                return Created(String.Empty, response);
+
+            }
+        }
+
+        [HttpDelete]
+        [Route("/order/{orderId}/removeitem/{itemId}")]
+        public async Task<ActionResult> RemoveItemFromOrder([FromRoute][Required] long orderId,
+                                                            [FromRoute][Required] long itemId)
+        {
+            var response = await _orderService.RemoveItemFromOrder(orderId,itemId);
+
+            if (response == -1) { return NotFound(); }
+            return NoContent();
         }
 
         /// <summary>
@@ -90,17 +103,17 @@ namespace PositronAPI.Controllers
 
         [HttpPost]
         [Route("/order/{orderId}/addservice/{serviceId}/{quantity}")]
-        public async Task<ActionResult> AddServiceToOrder([FromRoute][Required] long orderId,
+        public async Task<ActionResult<ServiceModelDTO>> AddServiceToOrder([FromRoute][Required] long orderId,
                                                        [FromRoute][Required] long serviceId, [FromRoute][Required] int quantity)
         {
             Service responseService = await IsValidServiceOrder(orderId, serviceId);
             if (responseService is null) { return NotFound(); }
 
-            decimal subtotal = _orderService.Subtotal(responseService.Price, quantity);
+            double subtotal = _orderService.Subtotal(responseService.Price, quantity);
 
             ServiceOrder serviceOrder = new ServiceOrder { OrderId = orderId, ServiceId = serviceId, Quantity = quantity, Subtotal = subtotal };
 
-            var response = _orderService.AddServiceToOrder(serviceOrder);
+            var response = await _orderService.AddServiceToOrder(serviceOrder);
 
             if (response == null) { return BadRequest(); }
             else { return Created(String.Empty, response); }
@@ -136,7 +149,7 @@ namespace PositronAPI.Controllers
 
         [HttpGet]
         [Route("/order/{orderId}/getitems")]
-        public async Task<ActionResult<List<ItemOrder>>> GetOrderItems([FromRoute][Required] long orderId)
+        public async Task<ActionResult<List<ItemModelDTO>>> GetOrderItems([FromRoute][Required] long orderId)
         {
             var response = await _orderService.GetOrderItems(orderId);
 
@@ -144,10 +157,21 @@ namespace PositronAPI.Controllers
             return Ok(response);
         }
 
+        [HttpDelete]
+        [Route("/order/{orderId}/removeservice/{serviceId}")]
+        public async Task<ActionResult> RemoveServiceFromOrder([FromRoute][Required] long orderId,
+            [FromRoute][Required] long serviceId)
+        {
+            var response = await _orderService.RemoveServiceFromOrder(orderId, serviceId);
+
+            if (response == null) { return NotFound(); }
+            return NoContent();
+        }
+
 
         [HttpGet]
         [Route("/order/{orderId}/getservices")]
-        public async Task<ActionResult<List<ServiceOrder>>> GetOrderServices([FromRoute][Required] long orderId)
+        public async Task<ActionResult<List<ServiceModelDTO>>> GetOrderServices([FromRoute][Required] long orderId)
         {
             var response = await _orderService.GetOrderServices(orderId);
 
@@ -166,14 +190,13 @@ namespace PositronAPI.Controllers
             else { return Ok(response); }
         }
 
-        public async Task<bool> IsValidOrder(Order order)
+        public async Task<bool> IsValidOrder(OrderImportDTO order)
         {
             if (order == null ||
                order.CustomerId == 0 ||
-               order.Status == OrderStatus.Pending ||
                !Enum.IsDefined(typeof(TaxCode), order.TaxCode)) { return false; }
 
-            if(order.CustomerId.HasValue)
+            if (order.CustomerId.HasValue)
             {
                 long customerIdNotNull = order.CustomerId.Value;
                 var customer = await _customerService.GetCustomer(customerIdNotNull);

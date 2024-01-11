@@ -19,10 +19,10 @@ namespace PositronAPI.Models.Schedule
         public string? Description { get; set; }
 
         [DataMember(Name = "duration")]
-        public TimeSpan Duration { get; set; }
+        public int Duration { get; set; }
 
         [DataMember(Name = "price")]
-        public decimal Price { get; set; }
+        public double Price { get; set; }
 
         [DataMember(Name = "category")]
         public ServiceCategory Category { get; set; }

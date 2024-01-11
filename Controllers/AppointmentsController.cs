@@ -8,11 +8,11 @@ namespace PositronAPI.Controllers
 {
     public class AppointmentsController : ControllerBase
     {
-        private readonly AppointmentService _appointmentService;
-        private readonly ServicesService _servicesService;
-        private readonly CustomerService _customerService;
+        private readonly IAppointmentService _appointmentService;
+        private readonly IServicesService _servicesService;
+        private readonly ICustomerService _customerService;
 
-        public AppointmentsController(AppointmentService appointmentService, ServicesService servicesService, CustomerService customerService)
+        public AppointmentsController(IAppointmentService appointmentService, IServicesService servicesService, ICustomerService customerService)
         {
             _appointmentService = appointmentService;
             _servicesService = servicesService;
@@ -21,13 +21,11 @@ namespace PositronAPI.Controllers
 
         [HttpPost]
         [Route("/appointment")]
-        public async Task<ActionResult<Appointment>> CreateAppointment([FromBody] Appointment body)
+        public async Task<ActionResult<Appointment>> CreateAppointment([FromBody] AppointmentImportDTO body)
         {
             if (await IsValidAppointment(body))
             {                
-                var newAppointment = new Appointment { CustomerId = body.CustomerId, ServiceId = body.ServiceId, Date = body.Date };
-                
-                var response = await _appointmentService.CreateAppointment(newAppointment);
+                var response = await _appointmentService.CreateAppointment(body);
 
                 if (response == null) { return BadRequest(); }
                 else { return Created(String.Empty, response); }
@@ -67,7 +65,7 @@ namespace PositronAPI.Controllers
             else { return Ok(response); }
         }
 
-        public async Task<bool> IsValidAppointment(Appointment appointment)
+        public async Task<bool> IsValidAppointment(AppointmentImportDTO appointment)
         {
             if (appointment == null ||
                 appointment.CustomerId == 0 ||

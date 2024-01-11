@@ -14,11 +14,12 @@ namespace PositronAPI.Services.ServicesService
         }
 
         // Add a service
-        public async Task<Service> CreateService(Service service)
+        public async Task<Service> CreateService(ServiceImportDTO service)
         {
-            _context.Services.Add(service);
+            var newService = new Service { EmployeeId = service.EmployeeId, Name = service.Name, Description = service.Description, Price = service.Price, Duration = service.Duration, Category = service.Category };
+            _context.Services.Add(newService);
             await _context.SaveChangesAsync();
-            return service;
+            return newService;
         }
 
         // Remove a service

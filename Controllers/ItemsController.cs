@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PositronAPI.Models.Item;
+using PositronAPI.Models.Order;
 using PositronAPI.Services.ItemService;
 using System.ComponentModel.DataAnnotations;
 
@@ -21,14 +22,11 @@ namespace PositronAPI.Controllers
         /// <param name="body">Properties for creating a new item.</param>
         [HttpPost]
         [Route("/item")]
-        public async Task<ActionResult<Item>> CreateItem([FromBody] Item body)
+        public async Task<ActionResult<Item>> CreateItem([FromBody] ItemImportDTO body)
         {
             if (IsValidItem(body))
             {
-                var newItem = new Item { Name = body.Name, Category = body.Category,
-                                        Description = body.Description, Price = body.Price , Stock = body.Stock};
-
-                var response = await _itemService.CreateItem(newItem);
+                var response = await _itemService.CreateItem(body);
 
                 if (response == null) { return BadRequest(); }
                 else { return Created(String.Empty, response); }
@@ -79,7 +77,13 @@ namespace PositronAPI.Controllers
         [Route("/item/{itemId}")]
         public async Task<ActionResult<Item>> GetItem([FromRoute][Required] long itemId)
         {
-            return await _itemService.GetItem(itemId);
+            var response = await _itemService.GetItem(itemId);
+            if (response is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(response);
         }
 
         /// <summary>
@@ -102,11 +106,12 @@ namespace PositronAPI.Controllers
             return Ok(response);
         }
 
-        public bool IsValidItem(Item item)
+        public bool IsValidItem(ItemImportDTO item)
         {
             if (item == null ||
                String.IsNullOrEmpty(item.Name) ||
-               item.Stock < 0 ||
+               !Enum.IsDefined(typeof(ItemCategory), item.Category) ||
+                item.Stock < 0 ||
                item.Price < 0) { return false; }
 
             return true;

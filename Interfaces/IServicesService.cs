@@ -4,7 +4,7 @@ namespace PositronAPI.Services.ServicesService
 {
     public interface IServicesService
     {
-        Task<Service> CreateService(Service service);
+        Task<Service> CreateService(ServiceImportDTO service);
         Task<Service> DeleteService(long serviceId);
         Task<Service> EditService(Service service, long serviceId);
         Task<Service> GetService(long serviceId);

@@ -14,11 +14,13 @@ namespace PositronAPI.Services.AppointmentService
         }
 
         // Add an appointment
-        public async Task<Appointment> CreateAppointment(Appointment appointment)
+        public async Task<Appointment> CreateAppointment(AppointmentImportDTO appointment)
         {
-            _context.Appointments.Add(appointment);
+            var newAppointment = new Appointment { CustomerId = appointment.CustomerId, ServiceId = appointment.ServiceId, Date = appointment.Date };
+
+            _context.Appointments.Add(newAppointment);
             await _context.SaveChangesAsync();
-            return appointment;
+            return newAppointment;
         }
 
         // Remove an appointment
@@ -80,7 +82,7 @@ namespace PositronAPI.Services.AppointmentService
                 return null;
             }
 
-            var appointments = await _context.Appointments.Where(a => a.ServiceId == serviceId && a.Date > date.Subtract(service.Duration) && a.Date < date.Add(service.Duration)).ToListAsync();
+            var appointments = await _context.Appointments.Where(a => a.ServiceId == serviceId && a.Date > date.Subtract(TimeSpan.FromMinutes(service.Duration)) && a.Date < date.Add(TimeSpan.FromMinutes(service.Duration))).ToListAsync();
             return appointments;
         }
     }

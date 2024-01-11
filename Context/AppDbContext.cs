@@ -31,7 +31,6 @@ namespace PositronAPI.Context
         public DbSet<Payment> Payments { get; set; }
 
 
-
         public DbSet<LoyaltyCard> LoyaltyCards { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
     }

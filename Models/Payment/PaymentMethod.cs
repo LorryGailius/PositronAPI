@@ -5,6 +5,7 @@
         Cash,
         Card,
         Check,
-        Other
+        Coupon,
+        Loyalty
     }
 }

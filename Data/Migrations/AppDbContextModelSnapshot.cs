@@ -30,7 +30,7 @@ namespace PositronAPI.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<decimal?>("Amount")
+                    b.Property<double?>("Amount")
                         .HasColumnType("numeric");
 
                     b.Property<long>("CustomerId")
@@ -72,7 +72,7 @@ namespace PositronAPI.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("ManagerId")
+                    b.Property<long?>("ManagerId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")
@@ -92,6 +92,9 @@ namespace PositronAPI.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
+                    b.Property<long>("DepartmentId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -103,7 +106,7 @@ namespace PositronAPI.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal?>("Wage")
+                    b.Property<double>("Wage")
                         .HasColumnType("numeric");
 
                     b.HasKey("Id");
@@ -129,7 +132,7 @@ namespace PositronAPI.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal>("Price")
+                    b.Property<double>("Price")
                         .HasColumnType("numeric");
 
                     b.Property<int>("Stock")
@@ -148,7 +151,7 @@ namespace PositronAPI.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<decimal>("Balance")
+                    b.Property<double>("Balance")
                         .HasColumnType("numeric");
 
                     b.Property<long>("CustomerId")
@@ -176,7 +179,7 @@ namespace PositronAPI.Data.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
-                    b.Property<decimal>("Subtotal")
+                    b.Property<double>("Subtotal")
                         .HasColumnType("numeric");
 
                     b.HasKey("Id");
@@ -201,7 +204,7 @@ namespace PositronAPI.Data.Migrations
                     b.Property<int>("TaxCode")
                         .HasColumnType("integer");
 
-                    b.Property<decimal>("Total")
+                    b.Property<double>("Total")
                         .HasColumnType("numeric");
 
                     b.HasKey("Id");
@@ -226,7 +229,7 @@ namespace PositronAPI.Data.Migrations
                     b.Property<long>("ServiceId")
                         .HasColumnType("bigint");
 
-                    b.Property<decimal>("Subtotal")
+                    b.Property<double>("Subtotal")
                         .HasColumnType("numeric");
 
                     b.HasKey("Id");
@@ -242,7 +245,7 @@ namespace PositronAPI.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<decimal>("Amount")
+                    b.Property<double>("Amount")
                         .HasColumnType("numeric");
 
                     b.Property<DateTime>("CreatedAt")
@@ -295,8 +298,8 @@ namespace PositronAPI.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<TimeSpan>("Duration")
-                        .HasColumnType("interval");
+                    b.Property<int>("Duration")
+                        .HasColumnType("integer");
 
                     b.Property<long>("EmployeeId")
                         .HasColumnType("bigint");
@@ -305,7 +308,7 @@ namespace PositronAPI.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal>("Price")
+                    b.Property<double>("Price")
                         .HasColumnType("numeric");
 
                     b.HasKey("Id");

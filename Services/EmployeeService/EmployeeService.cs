@@ -15,6 +15,8 @@ namespace PositronAPI.Services.EmployeeService
 
         public async Task<Employee> CreateEmployee(Employee employee)
         {
+            if (!Enum.IsDefined(typeof(Role), employee.Role)) return null;
+
             _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
             return employee;

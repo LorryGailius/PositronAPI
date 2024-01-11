@@ -4,7 +4,7 @@ namespace PositronAPI.Services.ItemService
 {
     public interface IItemService
     {
-        Task<Item> CreateItem(Item item);
+        Task<Item> CreateItem(ItemImportDTO item);
         Task<Item> DeleteItem(long itemId);
         Task<Item> EditItem(Item item, long itemId);
         Task<Item> EditItemQuantity(int quantityChange, long itemId);

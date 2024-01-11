@@ -8,10 +8,10 @@ namespace PositronAPI.Controllers
 {
     public class CouponsController : ControllerBase
     {
-        private readonly CouponService _couponService;
-        private readonly CustomerService _customerService;
-
-        public CouponsController(CouponService couponService, CustomerService customerService)
+        private readonly ICouponService _couponService;
+        private readonly ICustomerService _customerService;
+                         
+        public CouponsController(ICouponService couponService, ICustomerService customerService)
         {
             _couponService = couponService;
             _customerService = customerService;
@@ -27,7 +27,7 @@ namespace PositronAPI.Controllers
         /// <returns>The created coupon.</returns>
         [HttpPost]
         [Route("/coupon")]
-        public async Task<ActionResult<Coupon>> CreateCoupon([FromBody][Required] Coupon body)
+        public async Task<ActionResult<Coupon>> CreateCoupon([FromBody][Required] CouponImportDTO body)
         {
             if (await IsValidCoupon(body)) 
             {
@@ -79,17 +79,17 @@ namespace PositronAPI.Controllers
         /// <remarks>Gets coupons.</remarks>
         /// <param name="customerId">The id of the coupon holder</param>
         [HttpGet]
-        [Route("/coupon")]
+        [Route("/coupon/customer/{customerId}")]
         public async Task<ActionResult<List<Coupon>>> GetCoupons([FromRoute][Required] long customerId)
         {
             var response = await _couponService.GetCoupons(customerId);
 
-            if (response.Count == 0) { return NoContent(); }
+            if(response.Count == 0) { return NoContent(); }
 
             return Ok(response);
         }
 
-        public async Task<bool> IsValidCoupon(Coupon coupon)
+        public async Task<bool> IsValidCoupon(CouponImportDTO coupon)
         {
             if (coupon == null ||
                coupon.CustomerId == 0 ||

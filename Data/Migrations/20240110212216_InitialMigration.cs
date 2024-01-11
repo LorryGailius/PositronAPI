@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -34,7 +35,7 @@ namespace PositronAPI.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CustomerId = table.Column<long>(type: "bigint", nullable: false),
                     ExpirationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Amount = table.Column<decimal>(type: "numeric", nullable: true)
+                    Amount = table.Column<double>(type: "numeric", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -61,7 +62,7 @@ namespace PositronAPI.Data.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ManagerId = table.Column<long>(type: "bigint", nullable: false),
+                    ManagerId = table.Column<long>(type: "bigint", nullable: true),
                     Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -78,7 +79,8 @@ namespace PositronAPI.Data.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     Surname = table.Column<string>(type: "text", nullable: false),
                     Role = table.Column<int>(type: "integer", nullable: false),
-                    Wage = table.Column<decimal>(type: "numeric", nullable: true)
+                    Wage = table.Column<double>(type: "numeric", nullable: false),
+                    DepartmentId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,7 +96,7 @@ namespace PositronAPI.Data.Migrations
                     OrderId = table.Column<long>(type: "bigint", nullable: false),
                     ItemId = table.Column<long>(type: "bigint", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
-                    Subtotal = table.Column<decimal>(type: "numeric", nullable: false)
+                    Subtotal = table.Column<double>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -110,7 +112,7 @@ namespace PositronAPI.Data.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     Category = table.Column<int>(type: "integer", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
-                    Price = table.Column<decimal>(type: "numeric", nullable: false),
+                    Price = table.Column<double>(type: "numeric", nullable: false),
                     Stock = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -125,7 +127,7 @@ namespace PositronAPI.Data.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CustomerId = table.Column<long>(type: "bigint", nullable: false),
-                    Balance = table.Column<decimal>(type: "numeric", nullable: false)
+                    Balance = table.Column<double>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -140,7 +142,7 @@ namespace PositronAPI.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CustomerId = table.Column<long>(type: "bigint", nullable: true),
                     Status = table.Column<int>(type: "integer", nullable: false),
-                    Total = table.Column<decimal>(type: "numeric", nullable: false),
+                    Total = table.Column<double>(type: "numeric", nullable: false),
                     TaxCode = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -155,7 +157,7 @@ namespace PositronAPI.Data.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     OrderId = table.Column<long>(type: "bigint", nullable: false),
-                    Amount = table.Column<decimal>(type: "numeric", nullable: false),
+                    Amount = table.Column<double>(type: "numeric", nullable: false),
                     PaymentMethod = table.Column<int>(type: "integer", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -173,7 +175,7 @@ namespace PositronAPI.Data.Migrations
                     OrderId = table.Column<long>(type: "bigint", nullable: false),
                     ServiceId = table.Column<long>(type: "bigint", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
-                    Subtotal = table.Column<decimal>(type: "numeric", nullable: false)
+                    Subtotal = table.Column<double>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -189,8 +191,8 @@ namespace PositronAPI.Data.Migrations
                     EmployeeId = table.Column<long>(type: "bigint", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
-                    Duration = table.Column<TimeSpan>(type: "interval", nullable: false),
-                    Price = table.Column<decimal>(type: "numeric", nullable: false),
+                    Duration = table.Column<int>(type: "integer", nullable: false),
+                    Price = table.Column<double>(type: "numeric", nullable: false),
                     Category = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>

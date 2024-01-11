@@ -19,7 +19,7 @@ namespace PositronAPI.Models.Order
         public int Quantity { get; set; }
 
         [DataMember(Name = "subtotal")]
-        public decimal Subtotal { get; set; }
+        public double Subtotal { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
