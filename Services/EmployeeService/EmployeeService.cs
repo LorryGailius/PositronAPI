@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PositronAPI.Context;
 using PositronAPI.Models.Employee;
+using PositronAPI.Models.Schedule;
 
 namespace PositronAPI.Services.EmployeeService
 {
@@ -51,6 +52,26 @@ namespace PositronAPI.Services.EmployeeService
             await _context.SaveChangesAsync();
 
             return existingemployee;
+        }
+
+        public async Task<List<Appointment>> GetSchedule(long employeeId, DateTime date)
+        {
+            var employee = await _context.Employees.FindAsync(employeeId);
+            if (employee == null)
+            {
+                return null;
+            }
+
+            var employeeServices = await _context.Services.Where(s => s.EmployeeId == employeeId).Select(s => s.Id).ToListAsync();
+
+
+            // Return all appointments for the given employee on the given date
+
+            var appointments = await _context.Appointments
+                .Where(a => employeeServices.Contains(a.ServiceId) && a.Date.Year == date.Year && a.Date.Month == date.Month && date.Day == a.Date.Day)
+                .ToListAsync();
+
+            return appointments;
         }
 
         public async Task<Employee> GetEmployee(long employeeId)

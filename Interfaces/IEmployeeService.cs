@@ -1,4 +1,5 @@
 using PositronAPI.Models.Employee;
+using PositronAPI.Models.Schedule;
 
 namespace PositronAPI.Services.EmployeeService
 {
@@ -11,5 +12,6 @@ namespace PositronAPI.Services.EmployeeService
         Task<List<Employee>> GetEmployees(int top = 10, int skip = 0);
         Task<List<Employee>> GetEmployees(long departmentId, int top = 10, int skip = 0);
         Task<List<Employee>> GetEmployees(Role role, int top = 10, int skip = 0);
+        Task<List<Appointment>> GetSchedule(long employeeId, DateTime date);
     }
 }
