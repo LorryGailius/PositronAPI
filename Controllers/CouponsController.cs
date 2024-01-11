@@ -79,12 +79,12 @@ namespace PositronAPI.Controllers
         /// <remarks>Gets coupons.</remarks>
         /// <param name="customerId">The id of the coupon holder</param>
         [HttpGet]
-        [Route("/coupon")]
+        [Route("/coupon/customer/{customerId}")]
         public async Task<ActionResult<List<Coupon>>> GetCoupons([FromRoute][Required] long customerId)
         {
             var response = await _couponService.GetCoupons(customerId);
 
-            if (response.Count == 0) { return NoContent(); }
+            if(response.Count == 0) { return NoContent(); }
 
             return Ok(response);
         }
