@@ -29,10 +29,12 @@ namespace PositronAPI.Services.OrderService
         public async Task<ItemModelDTO> AddItemToOrder(ItemOrder itemOrder)
         {
             _context.ItemOrders.Add(itemOrder);
-            await _context.SaveChangesAsync();
             var item = await _context.Items.FindAsync(itemOrder.ItemId);
             var quantity = itemOrder.Quantity;
-            _context.Orders.FirstOrDefaultAsync(x => x.Id == itemOrder.OrderId).Result.Total += item.Price * quantity;
+            var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == itemOrder.OrderId);
+            order.Total += item.Price * quantity;
+            _context.Orders.Update(order);
+            await _context.SaveChangesAsync();
             return item.ToModelDto(itemOrder);
         }
 
@@ -40,10 +42,12 @@ namespace PositronAPI.Services.OrderService
         public async Task<ServiceModelDTO> AddServiceToOrder(ServiceOrder serviceOrder)
         {
             _context.ServiceOrders.Add(serviceOrder);
-            await _context.SaveChangesAsync();
             var service = await _context.Services.FindAsync(serviceOrder.ServiceId);
             var quantity = serviceOrder.Quantity;
-            _context.Orders.FirstOrDefaultAsync(x => x.Id == serviceOrder.OrderId).Result.Total += service.Price * quantity;
+            var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == serviceOrder.OrderId);
+            order.Total += service.Price * quantity;
+            _context.Orders.Update(order);
+            await _context.SaveChangesAsync();
             return service.ToModelDto(serviceOrder);
         }
 
@@ -64,7 +68,7 @@ namespace PositronAPI.Services.OrderService
 
             foreach (var item in items)
             {
-                var itemOrder = orderItems.FirstOrDefault(x=>x.ItemId == item.Id);
+                var itemOrder = orderItems.FirstOrDefault(x => x.ItemId == item.Id);
 
                 itemModels.Add(item.ToModelDto(itemOrder));
             }
