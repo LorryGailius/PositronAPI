@@ -82,8 +82,27 @@ namespace PositronAPI.Services.AppointmentService
                 return null;
             }
 
-            var appointments = await _context.Appointments.Where(a => a.ServiceId == serviceId && a.Date > date.Subtract(TimeSpan.FromMinutes(service.Duration)) && a.Date < date.Add(TimeSpan.FromMinutes(service.Duration))).ToListAsync();
-            return appointments;
+            var allEmployeeService = await _context.Services.Where(s => s.EmployeeId == service.EmployeeId).ToListAsync();
+
+            var appointments = await _context.Appointments
+                .Where(a => allEmployeeService.Select(x => x.Id).Contains(a.ServiceId) && a.Date == date.Date)
+                .ToListAsync();
+
+            var overlappingAppointments = new List<Appointment>();
+
+            foreach (var appointment in appointments)
+            {
+                // Get the service for the appointment
+                var appointmentService = allEmployeeService.FirstOrDefault(x => x.Id == appointment.ServiceId);
+
+                if (date <= appointment.Date && date.AddMinutes(service.Duration) >= appointment.Date ||
+                    date >= appointment.Date && appointment.Date.AddMinutes(appointmentService.Duration) <= date)
+                {
+                    overlappingAppointments.Add(appointment);
+                }
+            }
+
+            return overlappingAppointments;
         }
     }
 }
