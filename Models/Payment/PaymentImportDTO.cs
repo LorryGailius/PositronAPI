@@ -12,4 +12,7 @@ public class PaymentImportDTO
 
     [DataMember(Name = "paymentMethod")]
     public PaymentMethod PaymentMethod { get; set; }
+
+    [DataMember(Name = "couponId")]
+    public long? CouponId { get; set; }
 }

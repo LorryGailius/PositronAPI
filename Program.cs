@@ -10,6 +10,8 @@ using PositronAPI.Services.LoyaltyService;
 using PositronAPI.Services.OrderService;
 using PositronAPI.Services.ServicesService;
 using System.Text.Json.Serialization;
+using PositronAPI.Interfaces;
+using PositronAPI.Services.PaymentService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +31,7 @@ builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<ILoyaltyService, LoyaltyService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IServicesService, ServicesService>();
 
 // Add our DbContext
